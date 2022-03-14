@@ -12,38 +12,8 @@
 #include <sys/termios.h>
 #include <sys/mman.h>
 
-///////////////////////// UNIX SPECIFIC CODES ////////////////////////////////
-uint16_t check_key()
-{
-    fd_set readfds;
-    FD_ZERO(&readfds);
-    FD_SET(STDIN_FILENO, &readfds);
+///////////////////////////////////WINDOWS SPECIFIC CODE FOR VM///////////////////////////////////
 
-    struct timeval timeout;
-    timeout.tv_sec = 0;
-    timeout.tv_usec = 0;
-    return select(1, &readfds, NULL, NULL, &timeout) != 0;
-}
-struct termios original_tio;
-
-void disable_input_buffering()
-{
-    tcgetattr(STDIN_FILENO, &original_tio);
-    struct termios new_tio = original_tio;
-    new_tio.c_lflag &= ~ICANON & ~ECHO;
-    tcsetattr(STDIN_FILENO, TCSANOW, &new_tio);
-}
-
-void restore_input_buffering()
-{
-    tcsetattr(STDIN_FILENO, TCSANOW, &original_tio);
-}
-void handle_interrupt(int signal)
-{
-    restore_input_buffering();
-    printf("\n");
-    exit(-2);
-}
 //////////////////////////////////////////////////////////////////////
 
 // ALLOACATED MEMORY
@@ -99,10 +69,4 @@ enum
 
 int main(int arg_count, const char *args[]) // this run the program by taking in the arguments from the terminal!
 {
-    // UNIX SPECIFIC
-    signal(SIGINT, handle_interrupt);
-    disable_input_buffering(); // disables terminal moment
-
-    // UNIX SPECIFIC SHUTDOWN
-    restore_input_buffering(); // get back the terminal to normal
 }

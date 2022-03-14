@@ -2,7 +2,7 @@
 
 [CREDIT TO JUSTIN MEINER'S INSTRUCTIONS AND TEACHING](https://justinmeiners.github.io/lc3-vm/index.html#1:12)
 
-
+!WINDOWS VERSION!
 **VM PROJECT USING C**
 This is the tutorial project to understand computer instruction architecture such as LC3, x86 and ARM
 

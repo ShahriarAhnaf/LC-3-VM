@@ -1,3 +1,3 @@
 VM:
-	gcc main.c -o vm.o
+	gcc main.c -o vm.out
 
