@@ -39,4 +39,5 @@ Here is the procedure we need to write:
 
 The reads a bunch of 16 bit instructions and emulates the appropriate hardware instructions(opcodes) by just running them like functions.
 
-The vm.out file can be run with the binary instructions given as the instructions which will be eecuted in the terminal.
+The vm.out file can be run with the binary instructions given as the instructions which will be executed in the terminal.
+This will let me run the VM like a program for another program.
