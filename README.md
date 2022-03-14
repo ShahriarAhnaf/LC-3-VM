@@ -41,3 +41,8 @@ The reads a bunch of 16 bit instructions and emulates the appropriate hardware i
 
 The vm.out file can be run with the binary instructions given as the instructions which will be executed in the terminal.
 This will let me run the VM like a program for another program.
+
+**HOW does it find opcodes???**
+OPcodes are the first 4 bits of the 16 bit instructions system. By moving over the instruction we can get the appropriate opcode!
+
+
