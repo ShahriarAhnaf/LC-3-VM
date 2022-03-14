@@ -46,3 +46,32 @@ This will let me run the VM like a program for another program.
 OPcodes are the first 4 bits of the 16 bit instructions system. By moving over the instruction we can get the appropriate opcode!
 
 
+OPCODES!
+
+*ADD*
+
+If bit [5] is 0, the second source operand is obtained from SR2. If bit [5] is 1, the second source operand is obtained by sign-extending the imm5 field to 16 bits. In both cases, the second source operand is added to the contents of SR1 and the result stored in DR.
+
+
+
+***TASKS!***
+
+- FINISH THE OPCODES!
+    16 remaining
+    OP_BRANCH = 0,  /* branch */
+    OP_ADD,         /* add  */
+    OP_LD,          /* load */
+    OP_ST,          /* store */
+    OP_JMP_RES,     /* jump register */
+    OP_AND,         /* bitwise and */
+    OP_LDR,         /* load register */
+    OP_ST_RES,      /* store register */
+    OP_RTI,         /* unused */
+    OP_NOT,         /* bitwise not */
+    OP_LD_I,        /* load indirect */
+    OP_ST_I,        /* store indirect */
+    OP_JMP,         /* jump */
+    OP_RES,         /* reserved (unused) */
+    OP_LD_EFF_ADDR, /* load effective address */
+    OP_TRAP 
+
