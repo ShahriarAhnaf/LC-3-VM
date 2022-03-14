@@ -97,7 +97,7 @@ enum
     FL_NEG = 1 << 2, /* N basicaly 4 */
 };
 
-int main(void)
+int main(int arg_count, const char *args[]) // this run the program by taking in the arguments from the terminal!
 {
     // UNIX SPECIFIC
     signal(SIGINT, handle_interrupt);

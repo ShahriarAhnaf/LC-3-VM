@@ -1,6 +1,6 @@
 ##############################################
 
-{CREDIT TO JUSTIN MEINER'S INSTRUCTIONS AND TEACHING}[https://justinmeiners.github.io/lc3-vm/index.html#1:12]
+[CREDIT TO JUSTIN MEINER'S INSTRUCTIONS AND TEACHING](https://justinmeiners.github.io/lc3-vm/index.html#1:12)
 
 
 **VM PROJECT USING C**
@@ -32,3 +32,5 @@ Here is the procedure we need to write:
 
 *How the VM works*
 The reads a bunch of 16 bit instructions and emulates the appropriate hardware instructions(opcodes) by just running them like functions.
+
+The vm.out file can be run with the binary instructions given as the instructions which will be eecuted in the terminal.
