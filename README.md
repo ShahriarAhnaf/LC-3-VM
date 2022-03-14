@@ -28,6 +28,7 @@ Here is the procedure we need to write:
 3. Look at the opcode to determine which type of instruction it should perform.
 4. Perform the instruction using the parameters in the instruction.
 5. Go back to step 1
-*How to launch VM*
 
-*How to develop programs for the VM* 
+
+*How the VM works*
+The reads a bunch of 16 bit instructions and emulates the appropriate hardware instructions(opcodes) by just running them like functions.
