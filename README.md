@@ -42,6 +42,10 @@ The reads a bunch of 16 bit instructions and emulates the appropriate hardware i
 The vm.out file can be run with the binary instructions given as the instructions which will be executed in the terminal.
 This will let me run the VM like a program for another program.
 
+**REGISTERS**
+
+The registers are virtual cpu addresses to the memory allocated to the VM. All the registers only contain addresses not the values itself dont be confused!
+
 **HOW does it find opcodes???**
 OPcodes are the first 4 bits of the 16 bit instructions system. By moving over the instruction we can get the appropriate opcode!
 
@@ -54,12 +58,13 @@ If bit [5] is 0, the second source operand is obtained from SR2. If bit [5] is 1
 
 
 
+
 ***TASKS!***
 
 - FINISH THE OPCODES!
-    16 remaining
+    15 remaining
     OP_BRANCH = 0,  /* branch */
-    OP_ADD,         /* add  */
+    ~OP_ADD,         /* add  */~
     OP_LD,          /* load */
     OP_ST,          /* store */
     OP_JMP_RES,     /* jump register */
