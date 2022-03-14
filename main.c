@@ -34,7 +34,7 @@ void disable_input_buffering()
     tcsetattr(STDIN_FILENO, TCSANOW, &new_tio);
 }
 
-void restore_input_buffering()
+int restore_input_buffering()
 {
     tcsetattr(STDIN_FILENO, TCSANOW, &original_tio);
 }
@@ -49,7 +49,7 @@ void handle_interrupt(int signal)
 // ALLOACATED MEMORY
 uint16_t LeMem[UINT16_MAX];
 
-// ALL THE REGISTERS PRESENT IN THE VM
+// ALL THE INFORMATION ABOUT THE TEMPORARY REGISTER THAT IS INSIDE THE "VM" BEING PROCESSED AT THE MOMENT
 enum
 {
     R_R0 = 0,
@@ -65,7 +65,7 @@ enum
     R_COUNT
 };
 
-// OP CODES FOR VIRTUAL CPU
+// OP CODES FOR VIRTUAL CPU, BASICALLY INSTRUCTIONS FOR THE CPU
 enum
 {
     OP_BRANCH = 0,  /* branch */
@@ -139,87 +139,109 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
     switch (op)
     {
     case OP_ADD:
-    {
-        ADD, 6
-    }
-    break;
-    case OP_AND:
-    {
-        AND, 7
-    }
-    break;
-    case OP_NOT:
-    {
-        NOT, 7
-    }
-    break;
-    case OP_BR:
-    {
-        BR, 7
-    }
-    break;
-    case OP_JMP:
-    {
-        JMP, 7
-    }
-    break;
-    case OP_JSR:
-    {
-        JSR, 7
-    }
-    break;
-    case OP_LD:
-    {
-        LD, 7
-    }
-    break;
-    case OP_LDI:
-    {
-        LDI, 6
-    }
-    break;
-    case OP_LDR:
-    {
-        LDR, 7
-    }
-    break;
-    case OP_LEA:
-    {
-        LEA, 7
-    }
-    break;
-    case OP_ST:
-    {
-        ST, 7
-    }
-    break;
-    case OP_STI:
-    {
-        STI, 7
-    }
-    break;
-    case OP_STR:
-    {
-        STR, 7
-    }
-    break;
-    case OP_TRAP:
-    {
-        TRAP, 8
-    }
-    break;
+        op_add_f(&instr);
+        break;
+        // case OP_AND:
+        // {
+        //     AND, 7
+        // }
+        // break;
+        // case OP_NOT:
+        // {
+        //     NOT, 7
+        // }
+        // break;
+        // case OP_BR:
+        // {
+        //     BR, 7
+        // }
+        // break;
+        // case OP_JMP:
+        // {
+        //     JMP, 7
+        // }
+        // break;
+        // case OP_JSR:
+        // {
+        //     JSR, 7
+        // }
+        // break;
+        // case OP_LD:
+        // {
+        //     LD, 7
+        // }
+        // break;
+        // case OP_LDI:
+        // {
+        //     LDI, 6
+        // }
+        // break;
+        // case OP_LDR:
+        // {
+        //     LDR, 7
+        // }
+        // break;
+        // case OP_LEA:
+        // {
+        //     LEA, 7
+        // }
+        // break;
+        // case OP_ST:
+        // {
+        //     ST, 7
+        // }
+        // break;
+        // case OP_STI:
+        // {
+        //     STI, 7
+        // }
+        // break;
+        // case OP_STR:
+        // {
+        //     STR, 7
+        // }
+        // break;
+        // case OP_TRAP:
+        // // {
+        //     TRAP, 8
+        // }
+        break;
     case OP_RES:
     case OP_RTI:
     default:
-    {
-        BAD OPCODE, 7
+        // {
+        //     BAD OPCODE, 7
+        // }
+        break;
     }
-    break;
-    }
+    // UNIX SPECIFIC SHUTDOWN
+    restore_input_buffering(); // get back the terminal to normal
 }
 
-// UNIX SPECIFIC SHUTDOWN
-restore_input_buffering(); // get back the terminal to normal
+uint16_t sign_extend(uint16_t x, int bit_count)
+{
+    if ((x >> (bit_count - 1)) & 1)
+    {
+        x |= (0xFFFF << bit_count);
+    }
+    return x;
+}
+
+// check the left most bit of the number to see if the register address value is 0 or 1
+void update_flag(uint16_t rNum)
+{
+    if (registers[rNum] == 0)
+    {
+        registers[R_COND] = FL_POS;
+    }
+    else if (registers[rNum] >> 15)
+    {
+        registers[R_COND] = FL_NEG;
+    }
+    else
+    {
+        registers[R_COND] = FL_ZRO;
+    }
 }
 
 /* branch */
@@ -227,8 +249,26 @@ void op_branch_f() /* branch */
 {
 }
 /* add  */
-void op_add()
+uint16_t op_add_f(uint16_t instr)
 {
+    // destination address moment
+    u_int16_t r0 = (instr >> 9) & 0b111;
+
+    u_int16_t sr1 = instr >> 5; // get the 8th bit
+    /* whether we are in immediate mode or normal mode */
+    uint16_t imm_flag = (instr >> 5) & 0x1;
+    if (imm_flag)
+    {
+        uint16_t imm5 = sign_extend(instr & 0b11111, 5);
+        registers[r0] = registers[sr1] + imm5;
+    }
+    else
+    {
+        uint16_t sr2 = instr & 0b111;
+        registers[r0] = registers[sr2] + registers[sr1];
+    }
+
+    update_flag(r0);
 }
 //     OP_LD,          /* load */
 //     OP_ST,          /* store */
