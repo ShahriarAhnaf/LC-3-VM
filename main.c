@@ -111,7 +111,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
     {
         if (!read_image(args[j]))
         {
-            printf("failed to load image: %s\n", argv[j]);
+            printf("failed to load image: %s\n", args[j]);
             exit(1);
         }
     }
