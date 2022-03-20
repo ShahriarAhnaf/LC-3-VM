@@ -85,31 +85,25 @@ find destination register for r1 and then apply the bitwise NOT operator to the 
 
 - BASICALLY HOW TO MAKE AN IF STATEMENT USING ASSEMBLY
 
-The condition codes specified by the state of bits [11:9] are tested. If bit [11] is
-set, N is tested; if bit [11] is clear, N is not tested. If bit [10] is set, Z is tested, etc.
-If any of the condition codes tested is set, the program branches to the location
-specified by adding the sign-extended PCoffset9 field to the incremented PC.
-
-
 
 ***TASKS!***
 
-- FINISH THE OPCODES!
-    15 remaining
-    OP_BRANCH = 0,  /* branch */
-    ~OP_ADD,         /* add  */~
-    OP_LD,          /* load */
-    OP_ST,          /* store */
-    OP_JMP_RES,     /* jump register */
-   ~OP_AND,         /* bitwise and */~
-    OP_LDR,         /* load register */
-    OP_ST_RES,      /* store register */
-    OP_RTI,         /* unused */
-    ~OP_NOT,         /* bitwise not */~
-    ~OP_LD_I,        /* load indirect */~
-    OP_ST_I,        /* store indirect */
-    OP_JMP,         /* jump */
-    OP_RES,         /* reserved (unused) */
-    OP_LD_EFF_ADDR, /* load effective address */
-    OP_TRAP 
+FINISH THE OPCODES!
+    11 remaining
+-   ~OP_BRANCH,~  /* branch */
+-   ~OP_ADD,         /* add  */~
+-    OP_LD,          /* load */
+-    OP_ST,          /* store */
+-    OP_JMP_RES,     /* jump register */
+-   ~OP_AND,         /* bitwise and */~
+-    OP_LDR,         /* load register */
+-    OP_ST_RES,      /* store register */
+-    OP_RTI,         /* unused */
+-    ~OP_NOT,         /* bitwise not */~
+-    ~OP_LD_I,        /* load indirect */~
+-    OP_ST_I,        /* store indirect */
+-    OP_JMP,         /* jump */
+-    OP_RES,         /* reserved (unused) */
+-    OP_LD_EFF_ADDR, /* load effective address */
+-    OP_TRAP 
 
