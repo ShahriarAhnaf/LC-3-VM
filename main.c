@@ -299,13 +299,22 @@ void op_and_f(uint16_t instr)
     update_flag(dr);
 }
 
+//     OP_NOT,         /* bitwise not */
+void op_not_f(uint16_t instr)
+{
+    uint16_t r0 = (instr >> 9) & 0b111;
+    uint16_t r1 = (instr >> 6) & 0b111;
+
+    registers[r0] = ~registers[r1];
+    update_flags(r0);
+}
+
 //     OP_LD,          /* load */
 //     OP_ST,          /* store */
 //     OP_JMP_RES,     /* jump register */
 //     OP_LDR,         /* load register */
 //     OP_ST_RES,      /* store register */
 //     OP_RTI,         /* unused */
-//     OP_NOT,         /* bitwise not */
 //     OP_ST_I,        /* store indirect */
 //     OP_JMP,         /* jump */
 //     OP_RES,         /* reserved (unused) */
