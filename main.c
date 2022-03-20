@@ -243,8 +243,14 @@ void update_flag(uint16_t rNum)
 }
 
 /* branch */
-void op_branch_f() /* branch */
+void op_branch_f(uint16_t instr) /* branch */
 {
+    uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
+    uint16_t cond_flag = (instr >> 9) & 0x7;
+    if (cond_flag & registers[R_COND])
+    {
+        registers[R_PC] += pc_offset; // jump the PC to somewhere with the pc_offset
+    }
 }
 /* add  */
 void op_add_f(uint16_t instr)
@@ -269,6 +275,7 @@ void op_add_f(uint16_t instr)
     update_flag(r0);
 }
 
+/* load indirect address into a register*/
 void op_ldi_f(uint16_t instr)
 {
     /* destination register (DR) */
