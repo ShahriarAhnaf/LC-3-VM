@@ -74,6 +74,17 @@ bits. In either case, the second source operand and the contents of SR1 are bitw
 whether the binary value produced, taken as a 2’s complement integer, is negative,
 zero, or positive.
 
+**NOT**
+
+find destination register for r1 and then apply the bitwise NOT operator to the address data. 
+
+**BRANCH**
+
+The condition codes specified by the state of bits [11:9] are tested. If bit [11] is
+set, N is tested; if bit [11] is clear, N is not tested. If bit [10] is set, Z is tested, etc.
+If any of the condition codes tested is set, the program branches to the location
+specified by adding the sign-extended PCoffset9 field to the incremented PC.
+
 
 
 ***TASKS!***
