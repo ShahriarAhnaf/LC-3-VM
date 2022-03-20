@@ -279,10 +279,29 @@ void op_ldi_f(uint16_t instr)
     registers[r0] = mem_read(mem_read(registers[R_PC] + pc_offset));
     update_flag(r0);
 }
+
+//     OP_AND,         /* bitwise and */
+void op_and_f(uint16_t instr)
+{
+    uint16_t imm_flag = (instr >> 5) & 0x1;
+    uint16_t dr = (instr >> 8) & 0b111;
+    u_int16_t sr1 = (instr >> 5) & 0b111;
+
+    if (imm_flag)
+    {
+        registers[dr] = registers[sr1] & sign_extend(instr & 0b11111, 5);
+    }
+    else
+    {
+        uint16_t sr2 = instr & 0b111;
+        registers[dr] = registers[sr1] & registers[sr2];
+    }
+    update_flag(dr);
+}
+
 //     OP_LD,          /* load */
 //     OP_ST,          /* store */
 //     OP_JMP_RES,     /* jump register */
-//     OP_AND,         /* bitwise and */
 //     OP_LDR,         /* load register */
 //     OP_ST_RES,      /* store register */
 //     OP_RTI,         /* unused */
