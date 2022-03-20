@@ -171,11 +171,9 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
         //     LD, 7
         // }
         // break;
-        // case OP_LDI:
-        // {
-        //     LDI, 6
-        // }
-        // break;
+    case OP_LD_I:
+
+        break;
         // case OP_LDR:
         // {
         //     LDR, 7
@@ -249,7 +247,7 @@ void op_branch_f() /* branch */
 {
 }
 /* add  */
-uint16_t op_add_f(uint16_t instr)
+void op_add_f(uint16_t instr)
 {
     // destination address moment
     u_int16_t r0 = (instr >> 9) & 0b111;
@@ -270,6 +268,17 @@ uint16_t op_add_f(uint16_t instr)
 
     update_flag(r0);
 }
+
+void op_ldi_f(uint16_t instr)
+{
+    /* destination register (DR) */
+    uint16_t r0 = (instr >> 9) & 0x7;
+    /* PCoffset 9 bits */
+    uint16_t pc_offset = sign_extend(instr & 0b111111111, 9);
+    /* add pc_offset to the current PC, look at that memory location to get the final address */
+    registers[r0] = mem_read(mem_read(registers[R_PC] + pc_offset));
+    update_flag(r0);
+}
 //     OP_LD,          /* load */
 //     OP_ST,          /* store */
 //     OP_JMP_RES,     /* jump register */
@@ -278,7 +287,6 @@ uint16_t op_add_f(uint16_t instr)
 //     OP_ST_RES,      /* store register */
 //     OP_RTI,         /* unused */
 //     OP_NOT,         /* bitwise not */
-//     OP_LD_I,        /* load indirect */
 //     OP_ST_I,        /* store indirect */
 //     OP_JMP,         /* jump */
 //     OP_RES,         /* reserved (unused) */
