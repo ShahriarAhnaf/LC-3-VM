@@ -66,6 +66,16 @@ address of the data to be loaded into DR. The condition codes are set, based on
 whether the value loaded is negative, zero, or positive.
 
 
+**AND**
+
+If bit [5] is 0, the second source operand is obtained from SR2. If bit [5] is 1,
+the second source operand is obtained by sign-extending the imm5 field to 16
+bits. In either case, the second source operand and the contents of SR1 are bitwise ANDed, and the result stored in DR. The condition codes are set, based on
+whether the binary value produced, taken as a 2’s complement integer, is negative,
+zero, or positive.
+
+
+
 ***TASKS!***
 
 - FINISH THE OPCODES!
@@ -75,12 +85,12 @@ whether the value loaded is negative, zero, or positive.
     OP_LD,          /* load */
     OP_ST,          /* store */
     OP_JMP_RES,     /* jump register */
-    OP_AND,         /* bitwise and */
+   ~OP_AND,         /* bitwise and */~
     OP_LDR,         /* load register */
     OP_ST_RES,      /* store register */
     OP_RTI,         /* unused */
-    OP_NOT,         /* bitwise not */
-    OP_LD_I,        /* load indirect */
+    ~OP_NOT,         /* bitwise not */~
+    ~OP_LD_I,        /* load indirect */~
     OP_ST_I,        /* store indirect */
     OP_JMP,         /* jump */
     OP_RES,         /* reserved (unused) */
