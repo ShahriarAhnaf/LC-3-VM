@@ -2,6 +2,8 @@
 
 [CREDIT TO JUSTIN MEINER'S INSTRUCTIONS AND TEACHING](https://justinmeiners.github.io/lc3-vm/index.html#1:12)
 
+[The design document for the usage](https://justinmeiners.github.io/lc3-vm/supplies/lc3-isa.pdf)
+
 
 **VM PROJECT USING C**
 
@@ -56,7 +58,12 @@ OPCODES!
 
 If bit [5] is 0, the second source operand is obtained from SR2. If bit [5] is 1, the second source operand is obtained by sign-extending the imm5 field to 16 bits. In both cases, the second source operand is added to the contents of SR1 and the result stored in DR.
 
+**LOAD INDIRECT**
 
+An address is computed by sign-extending bits [8:0] to 16 bits and adding this
+value to the incremented PC. What is stored in memory at this address is the
+address of the data to be loaded into DR. The condition codes are set, based on
+whether the value loaded is negative, zero, or positive.
 
 
 ***TASKS!***
