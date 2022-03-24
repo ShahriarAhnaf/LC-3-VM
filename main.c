@@ -247,7 +247,7 @@ void op_branch_f(uint16_t instr) /* branch */
 {
     uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
     uint16_t cond_flag = (instr >> 9) & 0x7;
-    if (cond_flag & registers[R_COND])
+    if (cond_flag & registers[R_COND]) // if the bits match
     {
         registers[R_PC] += pc_offset; // jump the PC to somewhere with the pc_offset
     }
@@ -312,7 +312,7 @@ void op_not_f(uint16_t instr)
     uint16_t r0 = (instr >> 9) & 0b111;
     uint16_t r1 = (instr >> 6) & 0b111;
 
-    registers[r0] = ~registers[r1];
+    registers[r0] = ~registers[r1]; // bitwise not
     update_flags(r0);
 }
 

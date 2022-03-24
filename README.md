@@ -85,6 +85,13 @@ find destination register for r1 and then apply the bitwise NOT operator to the 
 
 - BASICALLY HOW TO MAKE AN IF STATEMENT USING ASSEMBLY
 
+**jump and return codes**
+
+- Takes a register to jump to and changes the PC counter to that address
+- return is basically the opposite of jump. 
+- Register 7 always contains the previous instruction address which the return uses in the form of 0b111 for ret
+
+
 
 ***TASKS!***
 
