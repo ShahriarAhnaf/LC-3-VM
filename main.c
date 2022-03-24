@@ -342,6 +342,14 @@ void op_jmp_res_f(uint16_t instr)
 }
 
 //     OP_LD,          /* load */
+void op_ld_f(uint16_t instr)
+{
+
+    uint16_t r0 = (instr >> 9) & 0b111;
+    uint16_t pc_offset = sign_extend(instr & 0b111111111, 9);
+    registers[r0] = mem_read(registers[R_PC] + pc_offset);
+    update_flag(r0);
+}
 //     OP_ST,          /* store */
 //     OP_LDR,         /* load register */
 //     OP_ST_RES,      /* store register */

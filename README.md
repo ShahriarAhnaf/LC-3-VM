@@ -102,7 +102,7 @@ FINISH THE OPCODES!
     9 remaining
 -   ~OP_BRANCH,~  /* branch */
 -   ~OP_ADD,         /* add  */~
--    OP_LD,          /* load */
+-   ~  OP_LD,          /* load */~
 -    OP_ST,          /* store */
 -~    OP_JMP_RES,     /* jump register */~
 -   ~OP_AND,         /* bitwise and */~
