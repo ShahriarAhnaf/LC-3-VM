@@ -109,7 +109,7 @@ FINISH THE OPCODES!
 -    ~OP_NOT,         /* bitwise not */~
 -    ~OP_LD_I,        /* load indirect */~
 -    OP_ST_I,        /* store indirect */
--    OP_JMP,         /* jump */
+-~    OP_JMP,         /* jump */~
 -    OP_RES,         /* reserved (unused) */
 -    OP_LD_EFF_ADDR, /* load effective address */
 -    OP_TRAP 

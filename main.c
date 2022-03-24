@@ -59,9 +59,9 @@ enum
     R_R4,
     R_R5,
     R_R6,
-    R_R7,
-    R_PC, /* program counter */
-    R_COND,
+    R_R7,   // previous jump instruction holder
+    R_PC,   /* program counter */
+    R_COND, // last calculation sign
     R_COUNT
 };
 
@@ -316,14 +316,37 @@ void op_not_f(uint16_t instr)
     update_flags(r0);
 }
 
+//     OP_JMP,         /* jump */
+// also the OP_RET code
+void op_jmp_f(uint16_t instr)
+{
+    u_int16_t jump_r = (instr >> 6) & 0b111;
+    registers[R_PC] = registers[jump_r];
+}
+
+//     OP_JMP_RES,     /* jump register */
+void op_jmp_res_f(uint16_t instr)
+{
+    registers[R_R7] = registers[R_PC]; // set the r7 to current counter address
+
+    // check the 11 bit
+    if ((instr >> 11) & 1)
+    {
+        registers[R_PC] += sign_extend((instr & 0b11111111111), 11); // JSR
+    }
+    else
+    {
+        uint16_t jump_r = (instr >> 6) & 0b111; // get the base R
+        registers[R_PC] = registers[jump_r];    // JSSR
+    }
+}
+
 //     OP_LD,          /* load */
 //     OP_ST,          /* store */
-//     OP_JMP_RES,     /* jump register */
 //     OP_LDR,         /* load register */
 //     OP_ST_RES,      /* store register */
 //     OP_RTI,         /* unused */
 //     OP_ST_I,        /* store indirect */
-//     OP_JMP,         /* jump */
 //     OP_RES,         /* reserved (unused) */
 //     OP_LD_EFF_ADDR, /* load effective address */
 //     OP_TRAP
