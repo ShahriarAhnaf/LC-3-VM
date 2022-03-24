@@ -1,4 +1,4 @@
-##############################################
+#########################################################################################
 
 [CREDIT TO JUSTIN MEINER'S INSTRUCTIONS AND TEACHING](https://justinmeiners.github.io/lc3-vm/index.html#1:12)
 
@@ -9,11 +9,11 @@
 
 This is the tutorial project to understand computer instruction architecture such as LC3, x86 and ARM
 
-
 **UNDERSTANDING THE VM**
 **Memory**
 
 This is all the memory allocated for the Vm to use, for LC-3 its 65535(UINT16_max)
+
 **Registers**
 
 Theres are The LC-3 has 10 total registers, each of which is 16 bits. Most of them are general purpose, but a few have designated roles.
@@ -91,17 +91,20 @@ find destination register for r1 and then apply the bitwise NOT operator to the 
 - return is basically the opposite of jump. 
 - Register 7 always contains the previous instruction address which the return uses in the form of 0b111 for ret
 
-
+**JUMP TO SUBROUTINE(JSR)**
+- set current counter as R7 
+- if the bit 11 is 1 then sign extend 0-10 bits for the jump address
+- if the bit is not 1 then jump to address in base address in bits 8-6. 
 
 ***TASKS!***
 
 FINISH THE OPCODES!
-    11 remaining
+    9 remaining
 -   ~OP_BRANCH,~  /* branch */
 -   ~OP_ADD,         /* add  */~
 -    OP_LD,          /* load */
 -    OP_ST,          /* store */
--    OP_JMP_RES,     /* jump register */
+-~    OP_JMP_RES,     /* jump register */~
 -   ~OP_AND,         /* bitwise and */~
 -    OP_LDR,         /* load register */
 -    OP_ST_RES,      /* store register */
