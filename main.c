@@ -350,11 +350,22 @@ void op_ld_f(uint16_t instr)
     registers[r0] = mem_read(registers[R_PC] + pc_offset);
     update_flag(r0);
 }
-//     OP_ST,          /* store */
+
+//     OP_LD_EFF_ADDR, /* load effective address */
+void op_ld_eff_addr_f(uint16_t instr)
+{
+    uint16_t r0 = (instr >> 9) & 0b111;                 // destination registers
+    uint16_t r1 = (instr >> 6) & 0b111;                 // base registers
+    uint16_t offset = sign_extend(instr & 0b111111, 6); // offset address
+    registers[r0] = mem_read(registers[r1] + offset);
+    update_flag(r0);
+}
+
 //     OP_LDR,         /* load register */
+
+//     OP_ST,          /* store */
 //     OP_ST_RES,      /* store register */
 //     OP_RTI,         /* unused */
 //     OP_ST_I,        /* store indirect */
 //     OP_RES,         /* reserved (unused) */
-//     OP_LD_EFF_ADDR, /* load effective address */
 //     OP_TRAP

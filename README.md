@@ -58,14 +58,6 @@ OPCODES!
 
 If bit [5] is 0, the second source operand is obtained from SR2. If bit [5] is 1, the second source operand is obtained by sign-extending the imm5 field to 16 bits. In both cases, the second source operand is added to the contents of SR1 and the result stored in DR.
 
-**LOAD INDIRECT**
-
-An address is computed by sign-extending bits [8:0] to 16 bits and adding this
-value to the incremented PC. What is stored in memory at this address is the
-address of the data to be loaded into DR. The condition codes are set, based on
-whether the value loaded is negative, zero, or positive.
-
-
 **AND**
 
 If bit [5] is 0, the second source operand is obtained from SR2. If bit [5] is 1,
@@ -95,6 +87,22 @@ find destination register for r1 and then apply the bitwise NOT operator to the 
 - set current counter as R7 
 - if the bit 11 is 1 then sign extend 0-10 bits for the jump address
 - if the bit is not 1 then jump to address in base address in bits 8-6. 
+
+**LOAD**
+- Load a value from 9 bit address that must be extended
+- use special mem_read function to read from the address IN THE VM not original PC. 
+
+**LOAD INDIRECT**
+
+An address is computed by sign-extending bits [8:0] to 16 bits and adding this
+value to the incremented PC. What is stored in memory at this address is the
+address of the data to be loaded into DR. The condition codes are set, based on
+whether the value loaded is negative, zero, or positive.
+
+**LOAD EFFECTIVE ADDR**
+- loads the address in the register given in bits [11:9] 
+- loads from the Base registers + a sign extended offset from the 6 bits at the end. 
+
 
 ***TASKS!***
 
