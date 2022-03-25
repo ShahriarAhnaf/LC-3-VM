@@ -100,9 +100,12 @@ address of the data to be loaded into DR. The condition codes are set, based on
 whether the value loaded is negative, zero, or positive.
 
 **LOAD EFFECTIVE ADDR**
+- load the direct address as an offset into the PC counter. 
+- update the destination register
+
+**LOAD REGISTER**
 - loads the address in the register given in bits [11:9] 
 - loads from the Base registers + a sign extended offset from the 6 bits at the end. 
-
 
 ***TASKS!***
 
@@ -112,16 +115,15 @@ FINISH THE OPCODES!
 -   ~OP_ADD,         /* add  */~
 -   ~  OP_LD,          /* load */~
 -    OP_ST,          /* store */
--~    OP_JMP_RES,     /* jump register */~
+- ~    OP_JMP_RES,     /* jump register */~
 -   ~OP_AND,         /* bitwise and */~
--    OP_LDR,         /* load register */
+-    ~OP_LDR,         /* load register */~
 -    OP_ST_RES,      /* store register */
--    OP_RTI,         /* unused */
 -    ~OP_NOT,         /* bitwise not */~
 -    ~OP_LD_I,        /* load indirect */~
 -    OP_ST_I,        /* store indirect */
--~    OP_JMP,         /* jump */~
+- ~  OP_JMP,         /* jump */~
 -    OP_RES,         /* reserved (unused) */
--    OP_LD_EFF_ADDR, /* load effective address */
+-    ~OP_LD_EFF_ADDR, /* load effective address */~
 -    OP_TRAP 
 
