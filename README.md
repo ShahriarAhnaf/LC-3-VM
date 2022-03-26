@@ -107,6 +107,9 @@ whether the value loaded is negative, zero, or positive.
 - loads the address in the register given in bits [11:9] 
 - loads from the Base registers + a sign extended offset from the 6 bits at the end. 
 
+
+**STORE**
+- uses the last 9 bits to write an address into the registers from an offset position from the PC
 ***TASKS!***
 
 FINISH THE OPCODES!
@@ -114,7 +117,7 @@ FINISH THE OPCODES!
 -   ~OP_BRANCH,~  /* branch */
 -   ~OP_ADD,         /* add  */~
 -   ~  OP_LD,          /* load */~
--    OP_ST,          /* store */
+-   ~ OP_ST,          /* store */~
 - ~    OP_JMP_RES,     /* jump register */~
 -   ~OP_AND,         /* bitwise and */~
 -    ~OP_LDR,         /* load register */~
