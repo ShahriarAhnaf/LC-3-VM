@@ -371,13 +371,19 @@ void op_ld_reg_f(uint16_t instr)
 //     OP_ST,          /* store */
 void op_st_f(uint16_t instr)
 {
-    uint16_t sr = (instr >> 9) & 0b111;
-    uint16_t offset = (instr & 0b111111111, 9);
-    sr = mem_write(registers[R_PC] + offset);
+    uint16_t r0 = (instr >> 9) & 0b111;
+    uint16_t pc_offset = sign_extend(instr & 0b111111111, 9);
+    mem_write(registers[R_PC] + pc_offset, registers[r0]);
 }
 
+//     OP_ST_I,        /* store indirect */
+void op_sti_f(uint16_t instr)
+{
+    uint16_t sr = (instr >> 9) & 0b111;
+    uint16_t offset = (instr & 0b111111111, 9);
+    mem_write(registers[R_PC] + offset);
+}
 //     OP_ST_RES,      /* store register */
 //     OP_RTI,         /* unused */
-//     OP_ST_I,        /* store indirect */
 //     OP_RES,         /* reserved (unused) */
 //     OP_TRAP
