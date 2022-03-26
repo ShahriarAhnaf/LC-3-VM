@@ -117,6 +117,10 @@ whether the value loaded is negative, zero, or positive.
 **Store register STR**
 - reads the contents in the base register + an offset from the 6 last bits and writes it to the address specified in bits [11-9]
 
+**TRAP OPCODES**
+- Defined in an enum!
+- Basically OS API for how to deal with I/O from the console and how to do basic actions such as keyboard input and outputting into the terminal with characters. 
+
 FINISH THE OPCODES!
     9 remaining
 -   ~OP_BRANCH,~  /* branch */
