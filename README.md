@@ -125,17 +125,17 @@ FINISH THE OPCODES!
     9 remaining
 -   ~OP_BRANCH,~  /* branch */
 -   ~OP_ADD,         /* add  */~
--   ~  OP_LD,          /* load */~
--   ~ OP_ST,          /* store */~
-- ~    OP_JMP_RES,     /* jump register */~
+-   ~OP_LD,          /* load */~
+-   ~OP_ST,          /* store */~
+- ~OP_JMP_RES,     /* jump register */~
 -   ~OP_AND,         /* bitwise and */~
 -    ~OP_LDR,         /* load register */~
 -    OP_ST_RES,      /* store register */
 -    ~OP_NOT,         /* bitwise not */~
 -    ~OP_LD_I,        /* load indirect */~
 -    ~OP_ST_I,        /* store indirect */~
-- ~  OP_JMP,         /* jump */~
--   ~ OP_RES,         /* reserved (unused) */~
+- ~OP_JMP,         /* jump */~
+-   ~OP_RES,         /* reserved (unused) */~
 -    ~OP_LD_EFF_ADDR, /* load effective address */~
 -    OP_TRAP 
 
