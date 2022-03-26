@@ -384,6 +384,14 @@ void op_sti_f(uint16_t instr)
     mem_write(mem_read(registers[R_PC] + offset), registers[sr]); // write the content into the sr register.
 }
 //     OP_ST_RES,      /* store register */
+void op_st_res_f(uint16_t instr)
+{
+    uint16_t sr = (instr >> 9) & 0b111;
+    uint16_t baseR = (instr >> 6) & 0b111;
+    uint16_t offset = sign_extend(instr & 0b111111, 6);
+    memwrite(registers[baseR] + offset, sr);
+}
+
 //     OP_RTI,         /* unused */
 //     OP_RES,         /* reserved (unused) */
 //     OP_TRAP

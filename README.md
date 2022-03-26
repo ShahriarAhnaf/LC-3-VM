@@ -110,7 +110,12 @@ whether the value loaded is negative, zero, or positive.
 
 **STORE**
 - uses the last 9 bits to write an address into the registers from an offset position from the PC
-***TASKS!***
+
+**STORE INDIRECT**
+- uses the same principles as the store functions but instaed of storing it in the offset position
+- stores the contents of the ADDRESS IN THE OFFSET. MUSt READ THE OFFSET aDDRESS.
+**Store register STR**
+- reads the contents in the base register + an offset from the 6 last bits and writes it to the address specified in bits [11-9]
 
 FINISH THE OPCODES!
     9 remaining
@@ -124,9 +129,9 @@ FINISH THE OPCODES!
 -    OP_ST_RES,      /* store register */
 -    ~OP_NOT,         /* bitwise not */~
 -    ~OP_LD_I,        /* load indirect */~
--    OP_ST_I,        /* store indirect */
+-    ~OP_ST_I,        /* store indirect */~
 - ~  OP_JMP,         /* jump */~
--    OP_RES,         /* reserved (unused) */
+-   ~ OP_RES,         /* reserved (unused) */~
 -    ~OP_LD_EFF_ADDR, /* load effective address */~
 -    OP_TRAP 
 
