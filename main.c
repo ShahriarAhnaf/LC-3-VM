@@ -316,21 +316,41 @@ void op_trap_f(uint16_t instr)
         fflush(stdout);
     }
     break;
-        // case TRAP_IN:
-        // {
-        //     TRAP IN, 9
-        // }
-        // break;
-        // case TRAP_PUTSP:
-        // {
-        //     TRAP PUTSP, 9
-        // }
-        // break;
-        // case TRAP_HALT:
-        // {
-        //     TRAP HALT, 9
-        // }
-        // break;
+    case TRAP_INPUT:
+    {
+        printf("Enter a character: ");
+        char c = getchar(); // read keyboard
+        putc(c, stdout);    // show to the person that the char has been read
+        fflush(stdout);
+        registers[R_R0] = (uint16_t)c;
+        update_flags(R_R0);
+    }
+    break;
+    case TRAP_PUTSP:
+    {
+        uint16_t *ch = LeMem + registers[R_R0]; // pointer to the output string
+        while (*ch)                             // while char is not null character
+        {
+            uint16_t character1 = *ch & 0xFF;
+            putc(character1, stdout);
+            uint16_t character2 = *ch >> 8;
+            if (character2)
+            {
+                putc(character2, stdout);
+            }
+            ++ch;
+        }
+        fflush(stdout);
+    }
+    break;
+    case TRAP_HALT:
+    {
+        puts("HALT!");
+        fflush(stdout);
+        running = 0;
+    }
+
+    break;
     }
 }
 

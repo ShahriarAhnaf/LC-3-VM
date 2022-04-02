@@ -7,7 +7,7 @@
 
 **VM PROJECT USING C**
 
-This is the tutorial project to understand computer instruction architecture such as LC3, x86 and ARM
+This is the tutorial project to understand computer instruction architecture such as LC3
 
 **UNDERSTANDING THE VM**
 **Memory**
@@ -24,7 +24,7 @@ Theres are The LC-3 has 10 total registers, each of which is 16 bits. Most of th
 
 **Operation Codes**
 
-Each opcode represents one task that the CPU "knows" how to do. There are just *16 opcodes* in LC-3. Everything the computer can calculate is some sequence of these simple instructions. Each instruction is 16 bits long, with the left 4 bits storing the opcode. The rest of the bits are used to store the parameters.
+Each opcode represents one task that the CPU "knows" how to do. There are just **16 opcodes** in LC-3. Everything the computer can calculate is some sequence of these simple instructions. Each instruction is 16 bits long, with the left 4 bits storing the opcode. The rest of the bits are used to store the parameters.
 
 **PROCEDURE**
 
@@ -94,10 +94,10 @@ find destination register for r1 and then apply the bitwise NOT operator to the 
 
 **LOAD INDIRECT**
 
-An address is computed by sign-extending bits [8:0] to 16 bits and adding this
-value to the incremented PC. What is stored in memory at this address is the
-address of the data to be loaded into DR. The condition codes are set, based on
-whether the value loaded is negative, zero, or positive.
+- An address is computed by sign-extending bits [8:0] to 16 bits and adding this
+- value to the incremented PC. What is stored in memory at this address is the
+- address of the data to be loaded into DR. The condition codes are set, based on
+- update flag whether the value loaded is negative, zero, or positive.
 
 **LOAD EFFECTIVE ADDR**
 - load the direct address as an offset into the PC counter. 
@@ -121,21 +121,7 @@ whether the value loaded is negative, zero, or positive.
 - Defined in an enum!
 - Basically OS API for how to deal with I/O from the console and how to do basic actions such as keyboard input and outputting into the terminal with characters. 
 - INSTEAD OF MAKING FUNCTIONS TRY TO ADD CODE IN THE SWITCH STATEMENT IT WILL BE A FASTER IMPLEMENTATION.
-FINISH THE OPCODES!
-    1 remaining
--   ~OP_BRANCH,~  /* branch */
--   ~OP_ADD,         /* add  */~
--   ~OP_LD,          /* load */~
--   ~OP_ST,          /* store */~
-- ~OP_JMP_RES,     /* jump register */~
--   ~OP_AND,         /* bitwise and */~
--    ~OP_LDR,         /* load register */~
--    ~OP_ST_RES,      /* store register */~
--    ~OP_NOT,         /* bitwise not */~
--    ~OP_LD_I,        /* load indirect */~
--    ~OP_ST_I,        /* store indirect */~
-- ~OP_JMP,         /* jump */~
--   ~OP_RES,         /* reserved (unused) */~
--    ~OP_LD_EFF_ADDR, /* load effective address */~
+
+
 -    OP_TRAP 
 
