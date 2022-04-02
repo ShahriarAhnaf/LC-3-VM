@@ -120,7 +120,7 @@ whether the value loaded is negative, zero, or positive.
 **TRAP OPCODES**
 - Defined in an enum!
 - Basically OS API for how to deal with I/O from the console and how to do basic actions such as keyboard input and outputting into the terminal with characters. 
-
+- INSTEAD OF MAKING FUNCTIONS TRY TO ADD CODE IN THE SWITCH STATEMENT IT WILL BE A FASTER IMPLEMENTATION.
 FINISH THE OPCODES!
     1 remaining
 -   ~OP_BRANCH,~  /* branch */

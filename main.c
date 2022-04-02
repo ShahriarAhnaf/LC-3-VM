@@ -291,21 +291,31 @@ void op_trap_f(uint16_t instr)
 {
     switch (instr & 0xFF)
     {
-        // case TRAP_GETC:
-        // {
-        //     TRAP GETC, 9
-        // }
-        // break;
-        // case TRAP_OUT:
-        // {
-        //     TRAP OUT, 9
-        // }
-        // break;
-        // case TRAP_PUTS:
-        // {
-        //     TRAP PUTS, 8
-        // }
-        // break;
+    case TRAP_GETCHAR:
+    {
+        registers[R_R0] = (uint16_t)getchar();
+        update_flag(R_R0);
+    }
+    break;
+    case TRAP_OUTPUT:
+    {
+        putc((char)registers[R_R0], stdout);
+        fflush(stdout);
+    }
+    break;
+    case TRAP_PUTSTRING:
+    {
+        /* one char per word */
+        // pointer to a char
+        uint16_t *ch = LeMem + registers[R_R0]; // using the address of the starting memory to find the register addy
+        while (*ch)                             // deref the char when the char is null character at the end it will terminate
+        {
+            putc((char)*ch, stdout);
+            ++ch;
+        }
+        fflush(stdout);
+    }
+    break;
         // case TRAP_IN:
         // {
         //     TRAP IN, 9
