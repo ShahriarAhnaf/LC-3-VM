@@ -108,6 +108,49 @@ enum
     FL_NEG = 1 << 2, /* N basicaly 4 */
 };
 
+void MAP_VM()
+{
+}
+uint16_t swap16(uint16_t bytes)
+{
+    // since we have the bytes
+    // simply shift the bytes according to the center.
+    return bytes >> 8 | bytes << 8;
+}
+void read_image_file(FILE *file)
+{
+    /* the origin tells us where in memory to place the image */
+    uint16_t origin; // creating the start of the VM instructions
+    // reading the file from the PC address of "origin"
+    // reading one instruction at a time
+    // and reading 16 bits at a time- > size of origin
+    fread(&origin, sizeof(origin), 1, file);
+    origin = swap16(origin); // swapping to big endian
+
+    /* we know the maximum file size so we only need one fread */
+    uint16_t max_read = UINT16_MAX - origin;
+    uint16_t *ptr_to_read_data = LeMem + origin;
+    size_t read = fread(ptr_to_read_data, sizeof(uint16_t), max_read, file);
+
+    /* swap to little endian */
+    while (read-- > 0)
+    {
+        *ptr_to_read_data = swap16(*ptr_to_read_data);
+        ++ptr_to_read_data;
+    }
+}
+int read_image(const char *image_path)
+{
+    FILE *file = fopen(image_path, "rb");
+    if (!file) // cant read file
+    {
+        return 0;
+    };
+    read_image_file(file);
+    fclose(file);
+    return 1;
+}
+
 uint16_t sign_extend(uint16_t x, int bit_count)
 {
     if ((x >> (bit_count - 1)) & 1)
@@ -134,10 +177,8 @@ void update_flag(uint16_t rNum)
     }
 }
 
-/* load indirect address into a register*/
-//     OP_RTI,         /* unused */
-//     OP_RES,         /* reserved (unused) */
 //     OP_TRAP
+
 void op_trap_f(uint16_t instr)
 {
     switch (instr & 0xFF)

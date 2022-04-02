@@ -55,7 +55,6 @@ OPcodes are the first 4 bits of the 16 bit instructions system. By moving over t
 OPCODES!
 
 *ADD*
-
 If bit [5] is 0, the second source operand is obtained from SR2. If bit [5] is 1, the second source operand is obtained by sign-extending the imm5 field to 16 bits. In both cases, the second source operand is added to the contents of SR1 and the result stored in DR.
 
 **AND**
@@ -122,4 +121,11 @@ find destination register for r1 and then apply the bitwise NOT operator to the 
 - Basically OS API for how to deal with I/O from the console and how to do basic actions such as keyboard input and outputting into the terminal with characters. 
 - INSTEAD OF MAKING FUNCTIONS TRY TO ADD CODE IN THE SWITCH STATEMENT IT WILL BE A FASTER IMPLEMENTATION.
 
+**BIG** VS *LITTLE* ENDIAN
+- most computers are little endian however the intsructions for LC-3 is LIttle endian. 
+- This means that the instructions when they are being loaded in from memory must be "flipped" for the purpose of the big endian architecture of LC3
 
+
+EXTRA PROJECT 
+
+MAP THE VM SO THAT IT CAN BE SEEN IN MEMORY!
