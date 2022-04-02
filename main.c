@@ -89,12 +89,12 @@ enum
 // TRAP CODES
 enum
 {
-    TRAP_GETC = 0x20,  /* get character from keyboard, not echoed onto the terminal */
-    TRAP_OUT = 0x21,   /* output a character */
-    TRAP_PUTS = 0x22,  /* output a word string */
-    TRAP_IN = 0x23,    /* get character from keyboard, echoed onto the terminal */
-    TRAP_PUTSP = 0x24, /* output a byte string */
-    TRAP_HALT = 0x25   /* halt the program */
+    TRAP_GETCHAR = 0x20,   /* get character from keyboard, not echoed onto the terminal */
+    TRAP_OUTPUT = 0x21,    /* output a character */
+    TRAP_PUTSTRING = 0x22, /* output a word string */
+    TRAP_INPUT = 0x23,     /* get character from keyboard, echoed onto the terminal */
+    TRAP_PUTSP = 0x24,     /* output a byte string */
+    TRAP_HALT = 0x25       /* halt the program */
 };
 
 // store the registers in an array
@@ -107,125 +107,6 @@ enum
     FL_ZRO = 1 << 1, /* Z bascially 2 */
     FL_NEG = 1 << 2, /* N basicaly 4 */
 };
-
-int main(int arg_count, const char *args[]) // this run the program by taking in the arguments from the terminal!
-{
-
-    if (arg_count < 2)
-    {
-        /* show usage string */
-        printf("lc3 [image-file1] ...\n");
-        exit(2);
-    }
-
-    for (int j = 1; j < arg_count; ++j)
-    {
-        if (!read_image(args[j]))
-        {
-            printf("failed to load image: %s\n", args[j]);
-            exit(1);
-        }
-    }
-    // UNIX SPECIFIC
-    signal(SIGINT, handle_interrupt);
-    disable_input_buffering(); // disables terminal moment
-
-    // actual code for the procedure
-
-    /* since exactly one condition flag should be set at any given time, set the Z flag */
-    registers[R_COND] = FL_ZRO; // set to Z flag
-
-    /* set the PC to starting position */
-    /* 0x3000 is the default */
-    enum
-    {
-        PC_START = 0x3000
-    };
-
-    registers[R_PC] = PC_START; // program counter starts at the start of the progam
-
-    uint16_t instr = mem_read(registers[R_PC]++);
-    uint16_t op = instr >> 12; // moves over instructions to
-
-    switch (op)
-    {
-    case OP_ADD:
-        op_add_f(&instr);
-        break;
-        // case OP_AND:
-        // {
-        //     AND, 7
-        // }
-        // break;
-        // case OP_NOT:
-        // {
-        //     NOT, 7
-        // }
-        // break;
-        // case OP_BR:
-        // {
-        //     BR, 7
-        // }
-        // break;
-        // case OP_JMP:
-        // {
-        //     JMP, 7
-        // }
-        // break;
-        // case OP_JSR:
-        // {
-        //     JSR, 7
-        // }
-        // break;
-        // case OP_LD:
-        // {
-        //     LD, 7
-        // }
-        // break;
-    case OP_LD_I:
-
-        break;
-        // case OP_LDR:
-        // {
-        //     LDR, 7
-        // }
-        // break;
-        // case OP_LEA:
-        // {
-        //     LEA, 7
-        // }
-        // break;
-        // case OP_ST:
-        // {
-        //     ST, 7
-        // }
-        // break;
-        // case OP_STI:
-        // {
-        //     STI, 7
-        // }
-        // break;
-        // case OP_STR:
-        // {
-        //     STR, 7
-        // }
-        // break;
-        // case OP_TRAP:
-        // // {
-        //     TRAP, 8
-        // }
-        break;
-    case OP_RES:
-    case OP_RTI:
-    default:
-        // {
-        //     BAD OPCODE, 7
-        // }
-        break;
-    }
-    // UNIX SPECIFIC SHUTDOWN
-    restore_input_buffering(); // get back the terminal to normal
-}
 
 uint16_t sign_extend(uint16_t x, int bit_count)
 {
@@ -441,4 +322,124 @@ void op_trap_f(uint16_t instr)
         // }
         // break;
     }
+}
+
+int main(int arg_count, const char *args[]) // this run the program by taking in the arguments from the terminal!
+{
+
+    if (arg_count < 2)
+    {
+        /* show usage string */
+        printf("lc3 [image-file1] ...\n");
+        exit(2);
+    }
+
+    for (int j = 1; j < arg_count; ++j)
+    {
+        if (!read_image(args[j]))
+        {
+            printf("failed to load image: %s\n", args[j]);
+            exit(1);
+        }
+    }
+    // UNIX SPECIFIC
+    signal(SIGINT, handle_interrupt);
+    disable_input_buffering(); // disables terminal moment
+
+    // actual code for the procedure
+
+    /* since exactly one condition flag should be set at any given time, set the Z flag */
+    registers[R_COND] = FL_ZRO; // set to Z flag
+
+    /* set the PC to starting position */
+    /* 0x3000 is the default */
+    enum
+    {
+        PC_START = 0x3000
+    };
+
+    registers[R_PC] = PC_START; // program counter starts at the start of the progam
+
+    uint16_t instr = mem_read(registers[R_PC]++);
+    uint16_t op = instr >> 12; // moves over instructions to opcode section
+
+    switch (op)
+    {
+    case OP_ADD:
+        op_add_f(instr);
+        break;
+    case OP_AND:
+    {
+        op_and_f(instr);
+    }
+    break;
+    case OP_NOT:
+    {
+        op_not_f(instr);
+        break;
+    }
+    case OP_BRANCH:
+    {
+        op_branch_f(instr);
+        break;
+    }
+    case OP_JMP:
+    {
+        op_jmp_f(instr);
+        break;
+    }
+    case OP_JMP_RES:
+    {
+        op_jmp_res_f(instr);
+        break;
+    }
+    case OP_LD:
+    {
+        op_ld_f(instr);
+        break;
+    }
+    case OP_LD_I:
+    {
+        op_ldi_f(instr);
+        break;
+    }
+    case OP_LDR:
+    {
+        op_ld_reg_f(instr);
+        break;
+    }
+    case OP_LD_EFF_ADDR:
+    {
+        op_ld_eff_addr_f(instr);
+        break;
+    }
+    case OP_ST:
+    {
+        op_st_f(instr);
+        break;
+    }
+
+    case OP_ST_I:
+    {
+        op_sti_f(instr);
+        break;
+    }
+    case OP_ST_RES:
+    {
+        op_st_res_f(instr);
+        break;
+    }
+    case OP_TRAP:
+    {
+        op_trap_f(instr);
+        break;
+    }
+    case OP_RES:
+    case OP_RTI:
+    default:
+        abort();
+        break;
+    }
+    // UNIX SPECIFIC SHUTDOWN
+    restore_input_buffering(); // get back the terminal to normal
 }
