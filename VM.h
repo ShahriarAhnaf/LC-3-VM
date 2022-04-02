@@ -97,10 +97,3 @@ void mem_write(uint16_t address, uint16_t valoo);
 // only reads from the address of VM memory
 //  reading keyboard memory calls get char
 uint16_t mem_read(uint16_t address);
-
-///////////////////////// UNIX SPECIFIC CODES ////////////////////////////////
-struct termios original_tio;
-void disable_input_buffering();
-int restore_input_buffering();
-void handle_interrupt(int signal);
-//////////////////////////////////////////////////////////////////////
