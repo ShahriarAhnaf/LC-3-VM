@@ -122,7 +122,7 @@ whether the value loaded is negative, zero, or positive.
 - Basically OS API for how to deal with I/O from the console and how to do basic actions such as keyboard input and outputting into the terminal with characters. 
 
 FINISH THE OPCODES!
-    9 remaining
+    1 remaining
 -   ~OP_BRANCH,~  /* branch */
 -   ~OP_ADD,         /* add  */~
 -   ~OP_LD,          /* load */~
@@ -130,7 +130,7 @@ FINISH THE OPCODES!
 - ~OP_JMP_RES,     /* jump register */~
 -   ~OP_AND,         /* bitwise and */~
 -    ~OP_LDR,         /* load register */~
--    OP_ST_RES,      /* store register */
+-    ~OP_ST_RES,      /* store register */~
 -    ~OP_NOT,         /* bitwise not */~
 -    ~OP_LD_I,        /* load indirect */~
 -    ~OP_ST_I,        /* store indirect */~

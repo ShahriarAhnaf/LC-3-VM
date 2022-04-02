@@ -400,7 +400,7 @@ void op_st_res_f(uint16_t instr)
     uint16_t sr = (instr >> 9) & 0b111;
     uint16_t baseR = (instr >> 6) & 0b111;
     uint16_t offset = sign_extend(instr & 0b111111, 6);
-    memwrite(registers[baseR] + offset, sr);
+    memwrite(registers[baseR] + offset, registers[sr]);
 }
 
 //     OP_RTI,         /* unused */
