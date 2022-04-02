@@ -126,6 +126,11 @@ find destination register for r1 and then apply the bitwise NOT operator to the 
 - This means that the instructions when they are being loaded in from memory must be "flipped" for the purpose of the big endian architecture of LC3
 
 
+**Memory Mapped Registers**
+- Some special registers are not accessible from the normal register table. Instead, a special address is reserved for them in memory. To read and write to these registers, you just read and write to their memory location. These are called memory mapped registers. They are commonly used to interact with special hardware devices.
+- These registers let the "computer" executing until the keyboard is pressed and THEN you can retrieve the data. instead of using getc and halting the whole computer. 
+
+
 EXTRA PROJECT 
 
 MAP THE VM SO THAT IT CAN BE SEEN IN MEMORY!
