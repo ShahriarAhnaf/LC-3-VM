@@ -112,7 +112,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             uint16_t r1 = (instr >> 6) & 0b111;
 
             registers[r0] = ~registers[r1]; // bitwise not
-            update_flags(r0);
+            update_flag(r0);
         }
         break;
         case OP_BRANCH:
@@ -200,7 +200,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             uint16_t sr = (instr >> 9) & 0b111;
             uint16_t baseR = (instr >> 6) & 0b111;
             uint16_t offset = sign_extend(instr & 0b111111, 6);
-            memwrite(registers[baseR] + offset, registers[sr]);
+            mem_write(registers[baseR] + offset, registers[sr]);
             break;
         }
         case OP_TRAP:
@@ -239,7 +239,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
                 putc(c, stdout);    // show to the person that the char has been read
                 fflush(stdout);
                 registers[R_R0] = (uint16_t)c;
-                update_flags(R_R0);
+                update_flag(R_R0);
             }
             break;
             case TRAP_PUTSP:
