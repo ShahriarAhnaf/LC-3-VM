@@ -123,5 +123,3 @@ find destination register for r1 and then apply the bitwise NOT operator to the 
 - INSTEAD OF MAKING FUNCTIONS TRY TO ADD CODE IN THE SWITCH STATEMENT IT WILL BE A FASTER IMPLEMENTATION.
 
 
--    OP_TRAP 
-

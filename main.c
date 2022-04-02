@@ -334,7 +334,7 @@ void op_trap_f(uint16_t instr)
             uint16_t character1 = *ch & 0xFF;
             putc(character1, stdout);
             uint16_t character2 = *ch >> 8;
-            if (character2)
+            if (character2) // if the thing is not null
             {
                 putc(character2, stdout);
             }
@@ -349,7 +349,6 @@ void op_trap_f(uint16_t instr)
         fflush(stdout);
         running = 0;
     }
-
     break;
     }
 }
