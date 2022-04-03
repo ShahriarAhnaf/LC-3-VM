@@ -96,7 +96,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
         case OP_AND:
         {
             uint16_t imm_flag = (instr >> 5) & 0x1;
-            uint16_t dr = (instr >> 8) & 0b111;
+            uint16_t dr = (instr >> 9) & 0b111;
             u_int16_t sr1 = (instr >> 5) & 0b111;
 
             if (imm_flag)
@@ -122,7 +122,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             registers[r0] = ~registers[r1]; // bitwise not
             update_flag(r0);
         }
-
+        break;
         case OP_BRANCH:
         {
             uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
