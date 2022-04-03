@@ -12,6 +12,11 @@
 #include <sys/termios.h>
 #include <sys/mman.h>
 
+#ifdef DEBUGGER
+void MAP_VM(void);
+void MAP_REGISTERS(void);
+#endif
+
 // declarations
 void mem_write(uint16_t address, uint16_t valoo);
 void update_flag(uint16_t instr);
@@ -82,7 +87,6 @@ enum
     FL_ZRO = 1 << 1, /* Z bascially 2 */
     FL_NEG = 1 << 2, /* N basicaly 4 */
 };
-void MAP_VM();
 uint16_t swap16(uint16_t bytes);
 void read_image_file(FILE *file);
 int read_image(const char *image_path);
