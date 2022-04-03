@@ -21,7 +21,7 @@ void MAP_REGISTERS(void);
 void mem_write(uint16_t address, uint16_t valoo);
 void update_flag(uint16_t instr);
 // ALLOACATED   LeMem
-uint16_t LeMem[UINT16_MAX];
+uint16_t LeMem[UINT16_MAX + 1];
 
 // ALL THE INFORMATION ABOUT THE TEMPORARY REGISTER THAT IS INSIDE THE "VM" BEING PROCESSED AT THE MOMENT
 enum
