@@ -212,7 +212,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
         break;
         case OP_TRAP:
         {
-            switch (instr & 0xFF)
+            switch (instr & 0b11111111) // get last 8 bits
             {
                 case TRAP_GETCHAR:
                 {
