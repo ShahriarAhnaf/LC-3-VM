@@ -91,7 +91,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
                 registers[r0] = registers[r1] + registers[r2];
             }
 
-            update_flags(r0);
+            update_flag(r0);
         }
         break;
         case OP_AND:
@@ -110,7 +110,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
                 uint16_t r2 = instr & 0x7;
                 registers[r0] = registers[r1] & registers[r2];
             }
-            update_flags(r0);
+            update_flag(r0);
         }
         break;
         case OP_NOT:
@@ -119,7 +119,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             uint16_t r1 = (instr >> 6) & 0x7;
 
             registers[r0] = ~registers[r1];
-            update_flags(r0);
+            update_flag(r0);
         }
         break;
         case OP_BRANCH:
@@ -161,7 +161,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             uint16_t r0 = (instr >> 9) & 0x7;
             uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
             registers[r0] = mem_read(registers[R_PC] + pc_offset);
-            update_flags(r0);
+            update_flag(r0);
         }
         break;
         case OP_LD_I:
@@ -172,7 +172,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
             /* add pc_offset to the current PC, look at that memory location to get the final address */
             registers[r0] = mem_read(mem_read(registers[R_PC] + pc_offset));
-            update_flags(r0);
+            update_flag(r0);
         }
         break;
         case OP_LDR:
@@ -181,7 +181,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             uint16_t r1 = (instr >> 6) & 0x7;
             uint16_t offset = sign_extend(instr & 0x3F, 6);
             registers[r0] = mem_read(registers[r1] + offset);
-            update_flags(r0);
+            update_flag(r0);
         }
         break;
         case OP_LD_EFF_ADDR:
@@ -189,7 +189,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             uint16_t r0 = (instr >> 9) & 0x7;
             uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
             registers[r0] = registers[R_PC] + pc_offset;
-            update_flags(r0);
+            update_flag(r0);
         }
         break;
         case OP_ST:
