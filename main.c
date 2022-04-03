@@ -110,7 +110,6 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             }
             update_flag(dr);
         }
-
         break;
 
         case OP_NOT:
@@ -196,7 +195,6 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             mem_write(registers[R_PC] + pc_offset, registers[r0]);
         }
         break;
-
         case OP_ST_I:
         {
             uint16_t sr = (instr >> 9) & 0b111;
@@ -216,71 +214,65 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
         {
             switch (instr & 0xFF)
             {
-            case TRAP_GETCHAR:
-            {
-                registers[R_R0] = (uint16_t)getchar();
-                update_flag(R_R0);
-            }
-
-            break;
-
-            case TRAP_OUTPUT:
-            {
-                putc((char)registers[R_R0], stdout);
-                fflush(stdout);
-            }
-            break;
-
-            case TRAP_PUTSTRING:
-            {
-                /* one char per word */
-                // pointer to a char
-                uint16_t *ch = LeMem + registers[R_R0]; // using the address of the starting    LeMem to find the register addy
-                while (*ch)                             // deref the char when the char is null character at the end it will terminate
+                case TRAP_GETCHAR:
                 {
-                    putc((char)*ch, stdout);
-                    ++ch;
+                    registers[R_R0] = (uint16_t)getchar();
+                    update_flag(R_R0);
                 }
-                fflush(stdout);
-            }
-            break;
-
-            case TRAP_INPUT:
-            {
-                printf("Enter a character: ");
-                char c = getchar(); // read keyboard
-                putc(c, stdout);    // show to the person that the char has been read
-                fflush(stdout);
-                registers[R_R0] = (uint16_t)c;
-                update_flag(R_R0);
-            }
-            break;
-
-            case TRAP_PUTSP:
-            {
-                uint16_t *ch = LeMem + registers[R_R0]; // pointer to the output string
-                while (*ch)                             // while char is not null character
+                break;
+                case TRAP_OUTPUT:
                 {
-                    uint16_t character1 = *ch & 0xFF;
-                    putc(character1, stdout);
-                    uint16_t character2 = *ch >> 8;
-                    if (character2) // if the thing is not null
+                    putc((char)registers[R_R0], stdout);
+                    fflush(stdout);
+                }
+                break;
+                case TRAP_PUTSTRING:
+                {
+                    /* one char per word */
+                    // pointer to a char
+                    uint16_t *ch = LeMem + registers[R_R0]; // using the address of the starting    LeMem to find the register addy
+                    while (*ch)                             // deref the char when the char is null character at the end it will terminate
                     {
-                        putc(character2, stdout);
+                        putc((char)*ch, stdout);
+                        ++ch;
                     }
-                    ++ch;
+                    fflush(stdout);
                 }
-                fflush(stdout);
-            }
-            break;
-
-            case TRAP_HALT:
-            {
-                puts("HALT!");
-                fflush(stdout);
-                running = 0;
-            }
-            break;
+                break;
+                case TRAP_INPUT:
+                {
+                    printf("Enter a character: ");
+                    char c = getchar(); // read keyboard
+                    putc(c, stdout);    // show to the person that the char has been read
+                    fflush(stdout);
+                    registers[R_R0] = (uint16_t)c;
+                    update_flag(R_R0);
+                }
+                break;
+                case TRAP_PUTSP:
+                {
+                    uint16_t *ch = LeMem + registers[R_R0]; // pointer to the output string
+                    while (*ch)                             // while char is not null character
+                    {
+                        uint16_t character1 = *ch & 0xFF;
+                        putc(character1, stdout);
+                        uint16_t character2 = *ch >> 8;
+                        if (character2) // if the thing is not null
+                        {
+                            putc(character2, stdout);
+                        }
+                        ++ch;
+                    }
+                    fflush(stdout);
+                }
+                break;
+                case TRAP_HALT:
+                {
+                    puts("HALT!");
+                    fflush(stdout);
+                    running = 0;
+                }
+                break;
             }
         }
         break;
