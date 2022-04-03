@@ -65,10 +65,11 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
     while (running)
     {
         uint16_t instr = mem_read(registers[R_PC]++);
-#ifdef DEBUGGER
-        MAP_REGISTERS();
-#endif
+
         uint16_t op = instr >> 12; // moves over instructions to opcode section
+        #ifdef DEBUGGER
+            if(op == OP_AND) MAP_REGISTERS();
+        #endif
         switch (op)
         {
         case OP_ADD:
@@ -91,8 +92,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
 
             update_flag(r0);
         }
-        break;
-
+            break;
         case OP_AND:
         {
             uint16_t imm_flag = (instr >> 5) & 0x1;
@@ -110,8 +110,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             }
             update_flag(dr);
         }
-        break;
-
+            break;
         case OP_NOT:
         {
 
@@ -121,7 +120,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             registers[r0] = ~registers[r1]; // bitwise not
             update_flag(r0);
         }
-        break;
+            break;
         case OP_BRANCH:
         {
             uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
@@ -131,14 +130,14 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
                 registers[R_PC] += pc_offset; // jump the PC to somewhere with the pc_offset
             }
         }
-        break;
+            break;
         case OP_JMP:
         {
 
             u_int16_t jump_r = (instr >> 6) & 0b111;
             registers[R_PC] = registers[jump_r];
         }
-        break;
+            break;
         case OP_JMP_RES:
         {
             registers[R_R7] = registers[R_PC]; // set the r7 to current counter address
@@ -153,7 +152,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
                 registers[R_PC] = registers[jump_r];    // JSSR
             }
         }
-        break;
+            break;
         case OP_LD:
         {
             uint16_t r0 = (instr >> 9) & 0b111;
@@ -161,7 +160,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             registers[r0] = mem_read(registers[R_PC] + pc_offset);
             update_flag(r0);
         }
-        break;
+            break;
         case OP_LD_I:
         { /* destination register (DR) */
             uint16_t r0 = (instr >> 9) & 0x7;
@@ -171,7 +170,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             registers[r0] = mem_read(mem_read(registers[R_PC] + pc_offset));
             update_flag(r0);
         }
-        break;
+            break;
         case OP_LDR:
         {
             uint16_t r0 = (instr >> 9) & 0b111;                 // destination registers
@@ -180,28 +179,28 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             registers[r0] = mem_read(registers[r1] + offset);
             update_flag(r0);
         }
-        break;
+            break;
         case OP_LD_EFF_ADDR:
         {
             uint16_t r0 = (instr >> 9) & 0b111;
             registers[r0] = registers[R_PC] + sign_extend(instr & 0b111111111, 9);
             update_flag(r0);
         }
-        break;
+            break;
         case OP_ST:
         {
             uint16_t r0 = (instr >> 9) & 0b111;
             uint16_t pc_offset = sign_extend(instr & 0b111111111, 9);
             mem_write(registers[R_PC] + pc_offset, registers[r0]);
         }
-        break;
+            break;
         case OP_ST_I:
         {
             uint16_t sr = (instr >> 9) & 0b111;
             uint16_t offset = sign_extend(instr & 0b111111111, 9);
             mem_write(mem_read(registers[R_PC] + offset), registers[sr]); // write the content into the sr register.
         }
-        break;
+            break;
         case OP_ST_RES:
         {
             uint16_t sr = (instr >> 9) & 0b111;
@@ -209,7 +208,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
             uint16_t offset = sign_extend(instr & 0b111111, 6);
             mem_write(registers[baseR] + offset, registers[sr]);
         }
-        break;
+            break;
         case OP_TRAP:
         {
             switch (instr & 0b11111111) // get last 8 bits
@@ -219,13 +218,13 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
                     registers[R_R0] = (uint16_t)getchar();
                     update_flag(R_R0);
                 }
-                break;
+                    break;
                 case TRAP_OUTPUT:
                 {
                     putc((char)registers[R_R0], stdout);
                     fflush(stdout);
                 }
-                break;
+                    break;
                 case TRAP_PUTSTRING:
                 {
                     /* one char per word */
@@ -238,7 +237,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
                     }
                     fflush(stdout);
                 }
-                break;
+                    break;
                 case TRAP_INPUT:
                 {
                     printf("Enter a character: ");
@@ -248,7 +247,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
                     registers[R_R0] = (uint16_t)c;
                     update_flag(R_R0);
                 }
-                break;
+                    break;
                 case TRAP_PUTSP:
                 {
                     uint16_t *ch = LeMem + registers[R_R0]; // pointer to the output string
@@ -265,17 +264,17 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
                     }
                     fflush(stdout);
                 }
-                break;
+                    break;
                 case TRAP_HALT:
                 {
                     puts("HALT!");
                     fflush(stdout);
                     running = 0;
                 }
-                break;
+                    break;
             }
         }
-        break;
+            break;
         case OP_RES:
         case OP_RTI:
         default:

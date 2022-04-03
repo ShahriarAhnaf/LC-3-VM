@@ -3,7 +3,7 @@ VM: main.c vm.c vm.h
 2048::VM
 	./lc3VM 2048.obj
 DEBUG: main.c vm.c vm.h
-	gcc --std=c11 -o VM *.c -DDEBUGGER
+	gcc --std=c11 -o Debug-VM *.c -DDEBUGGER
 clean: 
 	rm -f *.o *.out 
 
