@@ -5,6 +5,7 @@
 [The design document for the usage](https://justinmeiners.github.io/lc3-vm/supplies/lc3-isa.pdf)
 
 **BROKEN CODE NEEDS TO BE FIXED, INSTRUCTIONS DOES NOT RUN LC3 GAME**
+
 **VM PROJECT USING C**
 
 This is the tutorial project to understand computer instruction architecture such as LC3
