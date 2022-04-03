@@ -75,7 +75,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
         { // destination address moment
             u_int16_t r0 = (instr >> 9) & 0b111;
 
-            u_int16_t sr1 = instr >> 5; // get the 8th bit
+            u_int16_t sr1 = (instr >> 6) & 0b111; // get the 8th bit
             /* whether we are in immediate mode or normal mode */
             uint16_t imm_flag = (instr >> 5) & 0x1;
             if (imm_flag)
@@ -97,7 +97,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
         {
             uint16_t imm_flag = (instr >> 5) & 0x1;
             uint16_t dr = (instr >> 9) & 0b111;
-            u_int16_t sr1 = (instr >> 5) & 0b111;
+            u_int16_t sr1 = (instr >> 6) & 0b111;
 
             if (imm_flag)
             {
