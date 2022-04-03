@@ -72,144 +72,146 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
         switch (op)
         {
         case OP_ADD:
-        { // destination address moment
-            u_int16_t r0 = (instr >> 9) & 0b111;
-
-            u_int16_t sr1 = instr >> 5; // get the 8th bit
-            /* whether we are in immediate mode or normal mode */
+        {
+            /* destination register (DR) */
+            uint16_t r0 = (instr >> 9) & 0x7;
+            /* first operand (SR1) */
+            uint16_t r1 = (instr >> 6) & 0x7;
+            /* whether we are in immediate mode */
             uint16_t imm_flag = (instr >> 5) & 0x1;
+
             if (imm_flag)
             {
-                uint16_t imm5 = sign_extend(instr & 0b11111, 5);
-                registers[r0] = registers[sr1] + imm5;
+                uint16_t imm5 = sign_extend(instr & 0x1F, 5);
+                registers[r0] = registers[r1] + imm5;
             }
             else
             {
-                uint16_t sr2 = instr & 0b111;
-                registers[r0] = registers[sr2] + registers[sr1];
+                uint16_t r2 = instr & 0x7;
+                registers[r0] = registers[r1] + registers[r2];
             }
 
-            update_flag(r0);
+            update_flags(r0);
         }
         break;
-
         case OP_AND:
         {
+            uint16_t r0 = (instr >> 9) & 0x7;
+            uint16_t r1 = (instr >> 6) & 0x7;
             uint16_t imm_flag = (instr >> 5) & 0x1;
-            uint16_t dr = (instr >> 8) & 0b111;
-            u_int16_t sr1 = (instr >> 5) & 0b111;
 
             if (imm_flag)
             {
-                registers[dr] = registers[sr1] & sign_extend(instr & 0b11111, 5);
+                uint16_t imm5 = sign_extend(instr & 0x1F, 5);
+                registers[r0] = registers[r1] & imm5;
             }
             else
             {
-                uint16_t sr2 = instr & 0b111;
-                registers[dr] = registers[sr1] & registers[sr2];
+                uint16_t r2 = instr & 0x7;
+                registers[r0] = registers[r1] & registers[r2];
             }
-            update_flag(dr);
+            update_flags(r0);
         }
-
         break;
-
         case OP_NOT:
         {
+            uint16_t r0 = (instr >> 9) & 0x7;
+            uint16_t r1 = (instr >> 6) & 0x7;
 
-            uint16_t r0 = (instr >> 9) & 0b111;
-            uint16_t r1 = (instr >> 6) & 0b111;
-
-            registers[r0] = ~registers[r1]; // bitwise not
-            update_flag(r0);
+            registers[r0] = ~registers[r1];
+            update_flags(r0);
         }
-
+        break;
         case OP_BRANCH:
         {
             uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
             uint16_t cond_flag = (instr >> 9) & 0x7;
-            if (cond_flag & registers[R_COND]) // if the bits match
+            if (cond_flag & registers[R_COND])
             {
-                registers[R_PC] += pc_offset; // jump the PC to somewhere with the pc_offset
+                registers[R_PC] += pc_offset;
             }
         }
         break;
         case OP_JMP:
         {
-
-            u_int16_t jump_r = (instr >> 6) & 0b111;
-            registers[R_PC] = registers[jump_r];
+            /* Also handles RET */
+            uint16_t r1 = (instr >> 6) & 0x7;
+            registers[R_PC] = registers[r1];
         }
         break;
         case OP_JMP_RES:
         {
-            registers[R_R7] = registers[R_PC]; // set the r7 to current counter address
-            // check the 11 bit
-            if ((instr >> 11) & 1)
+            uint16_t long_flag = (instr >> 11) & 1;
+            registers[R_R7] = registers[R_PC];
+            if (long_flag)
             {
-                registers[R_PC] += sign_extend((instr & 0b11111111111), 11); // JSR
+                uint16_t long_pc_offset = sign_extend(instr & 0x7FF, 11);
+                registers[R_PC] += long_pc_offset; /* JSR */
             }
             else
             {
-                uint16_t jump_r = (instr >> 6) & 0b111; // get the base R
-                registers[R_PC] = registers[jump_r];    // JSSR
+                uint16_t r1 = (instr >> 6) & 0x7;
+                registers[R_PC] = registers[r1]; /* JSRR */
             }
+            break;
         }
         break;
         case OP_LD:
         {
-            uint16_t r0 = (instr >> 9) & 0b111;
-            uint16_t pc_offset = sign_extend(instr & 0b111111111, 9);
+            uint16_t r0 = (instr >> 9) & 0x7;
+            uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
             registers[r0] = mem_read(registers[R_PC] + pc_offset);
-            update_flag(r0);
+            update_flags(r0);
         }
         break;
         case OP_LD_I:
-        { /* destination register (DR) */
+        {
+            /* destination register (DR) */
             uint16_t r0 = (instr >> 9) & 0x7;
-            /* PCoffset 9 bits */
-            uint16_t pc_offset = sign_extend(instr & 0b111111111, 9);
-            /* add pc_offset to the current PC, look at that    LeMem location to get the final address */
+            /* PCoffset 9*/
+            uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
+            /* add pc_offset to the current PC, look at that memory location to get the final address */
             registers[r0] = mem_read(mem_read(registers[R_PC] + pc_offset));
-            update_flag(r0);
+            update_flags(r0);
         }
         break;
         case OP_LDR:
         {
-            uint16_t r0 = (instr >> 9) & 0b111;                 // destination registers
-            uint16_t r1 = (instr >> 6) & 0b111;                 // base registers
-            uint16_t offset = sign_extend(instr & 0b111111, 6); // offset address
+            uint16_t r0 = (instr >> 9) & 0x7;
+            uint16_t r1 = (instr >> 6) & 0x7;
+            uint16_t offset = sign_extend(instr & 0x3F, 6);
             registers[r0] = mem_read(registers[r1] + offset);
-            update_flag(r0);
+            update_flags(r0);
         }
         break;
         case OP_LD_EFF_ADDR:
         {
-            uint16_t r0 = (instr >> 9) & 0b111;
-            registers[r0] = registers[R_PC] + sign_extend(instr & 0b111111111, 9);
-            update_flag(r0);
+            uint16_t r0 = (instr >> 9) & 0x7;
+            uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
+            registers[r0] = registers[R_PC] + pc_offset;
+            update_flags(r0);
         }
         break;
         case OP_ST:
         {
-            uint16_t r0 = (instr >> 9) & 0b111;
-            uint16_t pc_offset = sign_extend(instr & 0b111111111, 9);
+            uint16_t r0 = (instr >> 9) & 0x7;
+            uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
             mem_write(registers[R_PC] + pc_offset, registers[r0]);
         }
         break;
-
         case OP_ST_I:
         {
-            uint16_t sr = (instr >> 9) & 0b111;
-            uint16_t offset = sign_extend(instr & 0b111111111, 9);
-            mem_write(mem_read(registers[R_PC] + offset), registers[sr]); // write the content into the sr register.
+            uint16_t r0 = (instr >> 9) & 0x7;
+            uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
+            mem_write(mem_read(registers[R_PC] + pc_offset), registers[r0]);
         }
         break;
         case OP_ST_RES:
         {
-            uint16_t sr = (instr >> 9) & 0b111;
-            uint16_t baseR = (instr >> 6) & 0b111;
-            uint16_t offset = sign_extend(instr & 0b111111, 6);
-            mem_write(registers[baseR] + offset, registers[sr]);
+            uint16_t r0 = (instr >> 9) & 0x7;
+            uint16_t r1 = (instr >> 6) & 0x7;
+            uint16_t offset = sign_extend(instr & 0x3F, 6);
+            mem_write(registers[r1] + offset, registers[r0]);
         }
         break;
         case OP_TRAP:
