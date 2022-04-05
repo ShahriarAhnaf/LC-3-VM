@@ -17,8 +17,13 @@ void MAP_REGISTERS(void)
     printf("\nSnapshot\n");
     for (int i = 0; i < R_COUNT; i++)
     {
+        if(i == R_PC){
+            printf("Register: %d = %x \n", i, registers[i]);
+        }
+        else {
         printf("Register: %d ="" m: " BYTE_TO_BINARY_PATTERN " " BYTE_TO_BINARY_PATTERN "\n",i,
                    BYTE_TO_BINARY(registers[i] >> 8), BYTE_TO_BINARY(registers[i]));
+        }
     }
 }
 

@@ -58,18 +58,16 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
     };
 
     registers[R_PC] = PC_START; // program counter starts at the start of the progam
-#ifdef DEBUGGER
-    MAP_VM();
-#endif
+
     int running = 1;
     while (running)
     {
         uint16_t instr = mem_read(registers[R_PC]++);
 
         uint16_t op = instr >> 12; // moves over instructions to opcode section
-        #ifdef DEBUGGER
-            if(op == OP_AND) MAP_REGISTERS();
-        #endif
+        
+        if(op == OP_AND) MAP_REGISTERS();
+       
         switch (op)
         {
         case OP_ADD:
