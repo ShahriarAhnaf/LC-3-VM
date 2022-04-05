@@ -58,7 +58,7 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
     };
 
     registers[R_PC] = PC_START; // program counter starts at the start of the progam
-
+    MAP_VM();
     int running = 1;
     while (running)
     {
