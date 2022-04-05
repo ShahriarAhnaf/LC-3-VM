@@ -66,8 +66,12 @@ int main(int arg_count, const char *args[]) // this run the program by taking in
 
         uint16_t op = instr >> 12; // moves over instructions to opcode section
         
-        if(op == OP_AND) MAP_REGISTERS();
-       
+        //shows EVERY INSTRUCTION
+        if (op != 0) MAP_REGISTERS();
+        
+        #ifdef DEBUGGER
+        if(op == 0) running= 0;
+        #endif
         switch (op)
         {
         case OP_ADD:
