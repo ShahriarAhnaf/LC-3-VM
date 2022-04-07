@@ -16,7 +16,7 @@
 
 void MAP_VM(void);
 void MAP_REGISTERS(void);
-void log_to_file(struct timespec start, struct timespec end,FILE* log_file, long long op_count);
+void log_to_file(struct timespec start, struct timespec end,FILE* log_file, uint16_t op);
 
 enum
 {
