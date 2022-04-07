@@ -247,7 +247,6 @@ int main(int argc, const char* argv[])
                         update_flags(R_R0);
                         break;
                     case TRAP_OUT:
-                        bruh = 1;
                         putc((char)registers[R_R0], stdout);
                         fflush(stdout);
                         break;
@@ -306,8 +305,8 @@ int main(int argc, const char* argv[])
         // time to traverse the switch statement.
         if (bruh){
             log_to_file(start,end, log_file, op_count);
-        }
-        op_count++;
+            op_count++;
+        }   
     }
     fclose(log_file);
     restore_input_buffering();
