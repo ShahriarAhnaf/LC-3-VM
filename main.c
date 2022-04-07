@@ -1,15 +1,6 @@
 
-/* unix */
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <sys/termios.h>
-#include <sys/mman.h>
-
 //includes
-#include "enums.h"
-
+#include "VM.h"
 void read_image_file(FILE* file)
 {
     /* the origin tells us where in memory to place the image */
@@ -37,38 +28,6 @@ int read_image(const char* image_path)
     fclose(file);
     return 1;
 }
-uint16_t check_key()
-{
-    fd_set readfds;
-    FD_ZERO(&readfds);
-    FD_SET(STDIN_FILENO, &readfds);
-
-    struct timeval timeout;
-    timeout.tv_sec = 0;
-    timeout.tv_usec = 0;
-    return select(1, &readfds, NULL, NULL, &timeout) != 0;
-}
-void mem_write(uint16_t address, uint16_t val)
-{
-    memory[address] = val;
-}
-
-uint16_t mem_read(uint16_t address)
-{
-    if (address == MR_KBSR)
-    {
-        if (check_key())
-        {
-            memory[MR_KBSR] = (1 << 15);
-            memory[MR_KBDR] = getchar();
-        }
-        else
-        {
-            memory[MR_KBSR] = 0;
-        }
-    }
-    return memory[address];
-}
 struct termios original_tio;
 
 void disable_input_buffering()
@@ -93,6 +52,9 @@ void handle_interrupt(int signal)
 
 int main(int argc, const char* argv[])
 {
+    FILE *log_file;
+    log_file = fopen("log_speed.txt", "w+");
+    long long op_count= 0;
     if (argc < 2)
     {
         /* show usage string */
@@ -343,10 +305,10 @@ int main(int argc, const char* argv[])
         }
         // time to traverse the switch statement.
         if (bruh){
-            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-            float delta_us = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) ;
-            printf("time: %f", delta_us);
+            log_to_file(start,end, log_file, op_count);
         }
+        op_count++;
     }
+    fclose(log_file);
     restore_input_buffering();
 }
