@@ -23,7 +23,7 @@ void update_flag(uint16_t instr);
 uint16_t LeMem[UINT16_MAX+1];
 
 // ALL THE INFORMATION ABOUT THE TEMPORARY REGISTER THAT IS INSIDE THE "VM" BEING PROCESSED AT THE MOMENT
-enum
+enum Reg
 {
     R_R0 = 0,
     R_R1,
@@ -39,7 +39,7 @@ enum
 };
 
 // OP CODES FOR VIRTUAL CPU, BASICALLY INSTRUCTIONS FOR THE CPU
-enum
+enum OP
 {
     OP_BRANCH = 0,  /* branch */
     OP_ADD,         /* add  */
@@ -60,7 +60,7 @@ enum
 };
 
 // TRAP CODES
-enum
+enum Trap
 {
     TRAP_GETCHAR = 0x20,   /* get character from keyboard, not echoed onto the terminal */
     TRAP_OUTPUT = 0x21,    /* output a character */
@@ -71,7 +71,7 @@ enum
 };
 
 //  LeMem MAPPED REGISTERS
-enum
+enum map_Reg
 {
     MR_KBStatusRegister = 0xFE00, /* keyboard status */
     MR_KBDataRegister = 0xFE02    /* keyboard data */
@@ -80,7 +80,7 @@ enum
 uint16_t registers[R_COUNT]; // empty array for how each register is doing
 
 // store the conditions flags
-enum
+enum conditions
 {
     FL_POS = 1 << 0, /* P bascially 1*/
     FL_ZRO = 1 << 1, /* Z bascially 2 */
