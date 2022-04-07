@@ -42,6 +42,13 @@ void MAP_VM(void)
         addyCounter++;
     }
 }
+#else
+void MAP_VM(void){
+
+}
+void MAP_REGISTERS(void){
+
+}
 #endif
 
 uint16_t swap16(uint16_t bytes)
