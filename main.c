@@ -53,7 +53,7 @@ void handle_interrupt(int signal)
 int main(int argc, const char* argv[])
 {
     FILE *log_file;
-    log_file = fopen("log_speed.txt", "w+");
+    log_file = fopen("slow_log_speed.txt", "w+");
     long long op_count= 0;
     if (argc < 2)
     {
