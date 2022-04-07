@@ -2,7 +2,6 @@
 /* unix */
 #include <unistd.h>
 #include <fcntl.h>
-
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/termios.h>
@@ -121,12 +120,16 @@ int main(int argc, const char* argv[])
     registers[R_PC] = PC_START;
 
     int running = 1;
+    // get operational times for comparision.
+    struct timespec start, end;
+    int bruh= 0;
     while (running)
     {
         /* FETCH */
         uint16_t instr = mem_read(registers[R_PC]++);
         uint16_t op = instr >> 12;
-
+        //get time
+        clock_gettime(CLOCK_MONOTONIC_RAW, &start);
         switch (op)
         {
             case OP_ADD:
@@ -277,10 +280,12 @@ int main(int argc, const char* argv[])
                 {
                     case TRAP_GETC:
                         /* read a single ASCII char */
+                        bruh =1;
                         registers[R_R0] = (uint16_t)getchar();
                         update_flags(R_R0);
                         break;
                     case TRAP_OUT:
+                        bruh = 1;
                         putc((char)registers[R_R0], stdout);
                         fflush(stdout);
                         break;
@@ -335,6 +340,12 @@ int main(int argc, const char* argv[])
             default:
                 abort();
                 break;
+        }
+        // time to traverse the switch statement.
+        if (bruh){
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            float delta_us = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) ;
+            printf("time: %f", delta_us);
         }
     }
     restore_input_buffering();
