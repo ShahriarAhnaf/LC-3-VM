@@ -106,10 +106,10 @@ void MAP_VM(void)
     }
 }
 
-void log_to_file(struct timespec start, struct timespec end, FILE* log_file, long long op_count){
+void log_to_file(struct timespec start, struct timespec end, FILE* log_file, uint16_t op){
     clock_gettime(CLOCK_MONOTONIC_RAW, &end);
     float delta_us = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) ;
-    fprintf(log_file, "op: %llu time elapsed: %f\n", op_count,  delta_us);
+    fprintf(log_file, "op: %x, time elapsed: %f\n", op, delta_us);
 }
 #else
 void MAP_VM(void){
@@ -118,6 +118,8 @@ void MAP_VM(void){
 void MAP_REGISTERS(void){
 
 }
-void log_to_file(struct timespec start, struct timespec end, FILE* log_file, long long op_count){
-}
+void log_to_file(struct timespec start, struct timespec end, FILE* log_file, uint16_t op)
+{
+
+} 
 #endif

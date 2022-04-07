@@ -54,7 +54,6 @@ int main(int argc, const char* argv[])
 {
     FILE *log_file;
     log_file = fopen("log_speed.txt", "w+");
-    long long op_count= 0;
     if (argc < 2)
     {
         /* show usage string */
@@ -304,9 +303,8 @@ int main(int argc, const char* argv[])
         }
         // time to traverse the switch statement.
         if (bruh){
-            log_to_file(start,end, log_file, op_count);
-            op_count++;
-        }   
+            log_to_file(start,end, log_file, op);
+         }   
     }
     fclose(log_file);
     restore_input_buffering();
