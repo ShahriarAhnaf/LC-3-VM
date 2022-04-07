@@ -4,7 +4,8 @@
 
 [The design document for the usage](https://justinmeiners.github.io/lc3-vm/supplies/lc3-isa.pdf)
 
-**BROKEN CODE NEEDS TO BE FIXED, INSTRUCTIONS DOES NOT RUN LC3 GAME**
+**FINALLY FINISHED DEBUGGING!**
+- FIGURE OUT THE MULTIPLE FILE IMPLEMENTATION DOES NOT WORK.
 
 **VM PROJECT USING C**
 

@@ -1,9 +1,7 @@
-VM: main.c vm.c vm.h
-	gcc *.c --std=c11 -o VM 
+VM: main.c
+	gcc --std=c11 -o VM *.c
 2048::VM
 	./VM 2048.obj
-Debug: main.c vm.c vm.h
-	gcc *.c --std=c11 -o Debug-VM -DDEBUGGER
 clean: 
-	rm -f *.o *.out 
+	rm -f *.o *.out *.sym
 
