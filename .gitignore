@@ -1,6 +1,7 @@
 .DS_Store
 *.sym
 *.txt
+Debug-VM
 
 # Prerequisites
 *.d
