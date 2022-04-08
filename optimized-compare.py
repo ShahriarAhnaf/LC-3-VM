@@ -39,6 +39,6 @@ Lefile.close()
 print(f"{'slow :':<25} {'Fast:':<30} {'DIFF':<60}")
     
 for i in range(0,len(firstcount)):
-    diff = count[i]/firstcount[i] * 100
+    diff = firstcount[i]/count[i] * 100
     #print(f"{'Location: ' + location:<25} Revision: {revision}")
     print(f"{str(count[i]):<25} { str(firstcount[i]):<30} {str(diff) + '%':<60}")
