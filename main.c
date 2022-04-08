@@ -83,6 +83,9 @@ int main(int argc, const char* argv[])
     int running = 1;
     // get operational times for comparision.
     struct timespec start, end;
+    uint16_t r0,r1,r2,imm_flag, imm5;
+    uint16_t pc_offset, base_plus_offset;
+        
     int bruh= 0;
     while (running)
     {
@@ -93,9 +96,6 @@ int main(int argc, const char* argv[])
         
         
         clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-        
-        uint16_t r0,r1,r2,imm_flag, imm5;
-        uint16_t pc_offset, base_plus_offset;
         switch (op)
         {
             case OP_ADD:
