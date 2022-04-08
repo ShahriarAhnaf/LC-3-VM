@@ -6,5 +6,5 @@ Debug: main.c VM.c VM.h 2048.obj
 	gcc --std=c11 -o DEBUG-VM1 *.c -DDEBUGGER	
 	./DEBUG-VM1 2048.obj
 clean: 
-	rm -f *.o *.out *.sym
+	rm -f *.txt *.o *.out *.sym
 

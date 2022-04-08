@@ -1,7 +1,7 @@
 .DS_Store
 *.sym
 *.txt
-
+VM
 
 # Prerequisites
 *.d
@@ -35,5 +35,6 @@
 *.exe
 *.out
 *.app
+Mach-o
 
 Debug-VM
