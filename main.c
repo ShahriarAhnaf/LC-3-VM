@@ -93,8 +93,6 @@ int main(int argc, const char* argv[])
         uint16_t instr = mem_read(registers[R_PC]++);
         uint16_t op = instr >> 12;
         //get time
-        
-        
         clock_gettime(CLOCK_MONOTONIC_RAW, &start);
         switch (op)
         {
@@ -246,11 +244,11 @@ int main(int argc, const char* argv[])
                 {
                     case TRAP_GETC:
                         /* read a single ASCII char */
-                        bruh =1;
                         registers[R_R0] = (uint16_t)getchar();
                         update_flags(R_R0);
                         break;
                     case TRAP_OUT:
+                        bruh=1;
                         putc((char)registers[R_R0], stdout);
                         fflush(stdout);
                         break;
