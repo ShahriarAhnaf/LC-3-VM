@@ -51,8 +51,10 @@ void handle_interrupt(int signal)
 
 int main(int argc, const char* argv[])
 {
+#ifdef DEBUGGER
     FILE *log_file;
     log_file = fopen("log_speed.txt", "w+");
+#endif
     if (argc < 2)
     {
         /* show usage string */
@@ -285,10 +287,15 @@ int main(int argc, const char* argv[])
                 break;
         }
         // time to traverse the switch statement.
+        
+#ifdef DEBUGGER   
         if (bruh){
             log_to_file(start,end, log_file, op);
          }   
     }
     fclose(log_file);
+#else
+    } // end of while loop   
+#endif
     restore_input_buffering();
 }
