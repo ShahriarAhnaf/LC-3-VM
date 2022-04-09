@@ -42,7 +42,7 @@ Lefile.close()
 
 
 #nice output 
-print(f"{'ORG(uS) :':<25} {'Optimized(uS):':<30} {'DIFF(%)':<60}")
+print(f"{'opcode':<10}{'ORG(uS)':<30} {'Optimized(uS)':<45} {'DIFF(%)':<70}")
     
 for i in range(0,len(fastcount)):
     #weighted the counting by their own occurences
@@ -61,7 +61,7 @@ for i in range(0,len(fastcount)):
     else:
         diff = 0
     #print(f"{'Location: ' + location:<25} Revision: {revision}")
-    print(f"{str(slowcount[i]):<25} { str(fastcount[i]):<30} {str(diff) + '%':<60}")
+    print(f"{i:<10} {str(slowcount[i]):<30} { str(fastcount[i]):<40} {str(diff) + '%':<69}")
 
 
 

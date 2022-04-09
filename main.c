@@ -1,4 +1,3 @@
-
 //includes
 #include "VM.h"
 void read_image_file(FILE* file)
@@ -84,7 +83,7 @@ int main(int argc, const char* argv[])
     // get operational times for comparision.
     struct timespec start, end;
     uint16_t r0,r1,r2,imm_flag, imm5;
-    uint16_t pc_offset, base_plus_offset;
+    uint16_t pc_offset, base_plus_offset, offset;
         
     int bruh= 0;
     while (running)
@@ -94,14 +93,13 @@ int main(int argc, const char* argv[])
         uint16_t op = instr >> 12;
         //get time
         clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+        // prejumping the move pepelaff
+        if (op & 0b0011) r0 = (instr >> 9) & 0x7;
+        if (op & 0b0101) r1 = (instr >> 6) & 0x7;
         switch (op)
         {
             case OP_ADD:
                 {
-                    /* destination register (DR) */
-                    r0 = (instr >> 9) & 0x7;
-                    /* first operand (SR1) */
-                    r1 = (instr >> 6) & 0x7;
                     /* whether we are in immediate mode */
                     imm_flag = (instr >> 5) & 0x1;
                 
@@ -121,8 +119,6 @@ int main(int argc, const char* argv[])
                 break;
             case OP_AND:
                 {
-                    r0 = (instr >> 9) & 0x7;
-                    r1 = (instr >> 6) & 0x7;
                     imm_flag = (instr >> 5) & 0x1;
                 
                     if (imm_flag)
@@ -140,9 +136,6 @@ int main(int argc, const char* argv[])
                 break;
             case OP_NOT:
                 {
-                    r0 = (instr >> 9) & 0x7;
-                    r1 = (instr >> 6) & 0x7;
-                
                     registers[r0] = ~registers[r1];
                     update_flags(r0);
                 }
@@ -160,7 +153,7 @@ int main(int argc, const char* argv[])
             case OP_JMP:
                 {
                     /* Also handles RET */
-                    r1 = (instr >> 6) & 0x7;
+                    // CAUSES PROBLEMS
                     registers[R_PC] = registers[r1];
                 }
                 break;
@@ -175,7 +168,6 @@ int main(int argc, const char* argv[])
                     }
                     else
                     {
-                        r1 = (instr >> 6) & 0x7;
                         registers[R_PC] = registers[r1]; /* JSRR */
                     }
                     break;
@@ -183,7 +175,6 @@ int main(int argc, const char* argv[])
                 break;
             case OP_LD:
                 {
-                    r0 = (instr >> 9) & 0x7;
                     pc_offset = sign_extend(instr & 0x1FF, 9);
                     registers[r0] = mem_read(registers[R_PC] + pc_offset);
                     update_flags(r0);
@@ -191,8 +182,6 @@ int main(int argc, const char* argv[])
                 break;
             case OP_LDI:
                 {
-                    /* destination register (DR) */
-                    r0 = (instr >> 9) & 0x7;
                     /* PCoffset 9*/
                     pc_offset = sign_extend(instr & 0x1FF, 9);
                     /* add pc_offset to the current PC, look at that memory location to get the final address */
@@ -202,16 +191,13 @@ int main(int argc, const char* argv[])
                 break;
             case OP_LDR:
                 {
-                    r0 = (instr >> 9) & 0x7;
-                    r1 = (instr >> 6) & 0x7;
-                    pc_offset = sign_extend(instr & 0x3F, 6);
-                    registers[r0] = mem_read(registers[r1] + pc_offset);
+                    offset = sign_extend(instr & 0x3F, 6);
+                    registers[r0] = mem_read(registers[r1] + offset);
                     update_flags(r0);
                 }
                 break;
             case OP_LEA:
                 {
-                    r0 = (instr >> 9) & 0x7;
                     pc_offset = sign_extend(instr & 0x1FF, 9);
                     registers[r0] = registers[R_PC] + pc_offset;
                     update_flags(r0);
@@ -219,24 +205,20 @@ int main(int argc, const char* argv[])
                 break;
             case OP_ST:
                 {
-                    r0 = (instr >> 9) & 0x7;
                     pc_offset = sign_extend(instr & 0x1FF, 9);
                     mem_write(registers[R_PC] + pc_offset, registers[r0]);
                 }
                 break;
             case OP_STI:
                 {
-                    r0 = (instr >> 9) & 0x7;
                     pc_offset = sign_extend(instr & 0x1FF, 9);
                     mem_write(mem_read(registers[R_PC] + pc_offset), registers[r0]);
                 }
                 break;
             case OP_STR:
                 {
-                    r0 = (instr >> 9) & 0x7;
-                    r1 = (instr >> 6) & 0x7;
-                     pc_offset = sign_extend(instr & 0x3F, 6);
-                    mem_write(registers[r1] + pc_offset, registers[r0]);
+                    offset = sign_extend(instr & 0x3F, 6);
+                    mem_write(registers[r1] + offset, registers[r0]);
                 }
                 break;
             case OP_TRAP:
