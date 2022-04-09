@@ -3,7 +3,7 @@ import sys
 
 limit = int(sys.argv[1])
 
-Lefile = open("log_speed.txt", 'r')
+Lefile = open("logs/log_speed.txt", 'r')
 fastcount = []
 fastcountavg = []
 for i in range(0,16):
@@ -24,7 +24,7 @@ Lefile.close()
 
 
 # other file
-Lefile = open("slow_log_speed.txt", 'r')
+Lefile = open("logs/slow_log_speed.txt", 'r')
 
 slowcount = []
 slowcountavg = []
