@@ -96,7 +96,6 @@ int main(int argc, const char* argv[])
         // prejumping the move pepelaff
         if (op & 0b0011) r0 = (instr >> 9) & 0x7;
         if (op & 0b0101) r1 = (instr >> 6) & 0x7;
-        if ((op & 0b0110)) pc_offset = sign_extend(instr & 0x1FF, 9);
         switch (op)
         {
             case OP_ADD:
@@ -175,12 +174,14 @@ int main(int argc, const char* argv[])
                 break;
             case OP_LD:
                 {
+                    pc_offset = sign_extend(instr & 0x1FF, 9);
                     registers[r0] = mem_read(registers[R_PC] + pc_offset);
                     update_flags(r0);
                 }
                 break;
             case OP_LDI:
                 {
+                    pc_offset = sign_extend(instr & 0x1FF, 9);
                     /* add pc_offset to the current PC, look at that memory location to get the final address */
                     registers[r0] = mem_read(mem_read(registers[R_PC] + pc_offset));
                     update_flags(r0);
@@ -195,17 +196,20 @@ int main(int argc, const char* argv[])
                 break;
             case OP_LEA:
                 {
+                    pc_offset = sign_extend(instr & 0x1FF, 9);
                     registers[r0] = registers[R_PC] + pc_offset;
                     update_flags(r0);
                 }
                 break;
             case OP_ST:
                 {
+                    pc_offset = sign_extend(instr & 0x1FF, 9);
                     mem_write(registers[R_PC] + pc_offset, registers[r0]);
                 }
                 break;
             case OP_STI:
                 {
+                    pc_offset = sign_extend(instr & 0x1FF, 9);
                     mem_write(mem_read(registers[R_PC] + pc_offset), registers[r0]);
                 }
                 break;

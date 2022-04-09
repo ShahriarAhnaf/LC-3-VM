@@ -14,7 +14,7 @@ for line in Lefile:
     #use the list indext to go to op. 
     fastcount[op] += int(leLine[-1], 10)/10 # last thing in line
     line_count += 1
-    if line_count > 1000000: break
+    if line_count > 10000000: break
 Lefile.close()
 
 
@@ -35,7 +35,7 @@ for line in Lefile:
     #use the list indext to go to op. 
     slowcount[op] += int(leLine[-1], 10)/10 # last thing in line
     line_count += 1
-    if line_count > 1000000: break
+    if line_count > 10000000: break
 Lefile.close()
 Lefile.close()
 
