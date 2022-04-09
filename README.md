@@ -37,7 +37,7 @@ This is the tutorial project to understand computer instruction architecture suc
 This is all the memory allocated for the Vm to use, for LC-3 its 65535(UINT16_max)
 
 # LOOKS LIKE THIS 
-![design](https://github.com/ShahriarAhnaf/LC-3-VM/blob/main/assets/design.png)
+![design](https://github.com/ShahriarAhnaf/LC-3-VM/blob/main/assets/Design.png)
 
 **Registers**
 
