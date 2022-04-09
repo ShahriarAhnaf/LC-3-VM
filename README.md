@@ -4,13 +4,10 @@
 
 [The design document for the usage](https://justinmeiners.github.io/lc3-vm/supplies/lc3-isa.pdf)
 
-**FINALLY FINISHED DEBUGGING!**
-- FIGURE OUT THE MULTIPLE FILE IMPLEMENTATION DOES NOT WORK.
-- RESULTS ARE OUT AND THEY ARE NOT GOOD FOR THE SPEED SIDE
 
-IMPROVEMENTS
-- EVERYTHING BUT JMP and JSR
-
+**IMPROVEMENTS upon designs!!**
+- Opimization results!
+- ![pics](https://github.com/ShahriarAhnaf/LC-3-VM/optimization-study.png)
 
 **VM PROJECT USING C**
 
