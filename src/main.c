@@ -53,12 +53,9 @@ int main(int argc, const char* argv[])
 {
 #ifdef LOGGER
     FILE *log_file;
-    log_file = fopen("/logs/log_speed.txt", "w+");
+    log_file = fopen("logs/log_speed.txt", "w+");
 #endif
-#ifdef Debug
-    FILE *map_file;
-    map_file = fopen("logs/MAP.txt", "w+");
-#endif
+
     if (argc < 2)
     {
         /* show usage string */
@@ -81,6 +78,8 @@ int main(int argc, const char* argv[])
 
     //MAP THE VM
     #ifdef DEBUGGER
+    FILE *map_file;
+    map_file = fopen("logs/MAP.txt", "w+");
     MAP_VM(map_file);
     #endif
     /* since exactly one condition flag should be set at any given time, set the Z flag */
@@ -106,7 +105,8 @@ int main(int argc, const char* argv[])
         
         
         #ifdef DEBUGGER
-        MAP_REGISTERS(map_file);
+        
+        if(op == 0) MAP_REGISTERS(map_file);
         #endif
         
         

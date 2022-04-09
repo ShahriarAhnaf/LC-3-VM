@@ -6,7 +6,7 @@ Log: src/main.c src/VM.c src/VM.h objects/2048.obj
 	./LOG-VM objects/2048.obj
 Debug: src/main.c src/VM.c src/VM.h objects/2048.obj
 	gcc --std=c11 -o DEBUG-VM src/*.c -DDEBUGGER	
-	./DEBUG-VM1 objects/2048.obj
+	./DEBUG-VM objects/2048.obj
 run-2048:: VM /objects/2048.obj
 	./VM objects/2048.obj
 run-rogue:: VM /objects/rogue.obj

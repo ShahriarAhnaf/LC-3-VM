@@ -75,16 +75,16 @@ uint16_t mem_read(uint16_t address)
         (byte & 0x02 ? '1' : '0'), \
         (byte & 0x01 ? '1' : '0')
 
-void MAP_REGISTERS(void)
+void MAP_REGISTERS(FILE* map_file)
 {
-    printf("\nSnapshot\n");
+    fprintf(map_file,"\nSnapshot\n");
     for (int i = 0; i < R_COUNT; i++)
     {
         if(i == R_PC){
-            printf("Register: %d = %x \n", i, registers[i]);
+            fprintf(map_file, "Register: %d = %x \n", i, registers[i]);
         }
         else {
-        printf("Register: %d ="" m: " BYTE_TO_BINARY_PATTERN " " BYTE_TO_BINARY_PATTERN "\n",i,
+        fprintf(map_file, "Register: %d ="" m: " BYTE_TO_BINARY_PATTERN " " BYTE_TO_BINARY_PATTERN "\n",i,
                    BYTE_TO_BINARY(registers[i] >> 8), BYTE_TO_BINARY(registers[i]));
         }
     }
@@ -98,8 +98,8 @@ void MAP_VM(FILE* map_file)
         uint16_t memory = mem_read(addyCounter);
         if (memory != 0)
         {
-            printf("\naddress %#010x : ", addyCounter);
-            printf("m: " BYTE_TO_BINARY_PATTERN " " BYTE_TO_BINARY_PATTERN "\n",
+            fprintf(map_file,"\naddress %#010x : ", addyCounter);
+            fprintf(map_file, "m: " BYTE_TO_BINARY_PATTERN " " BYTE_TO_BINARY_PATTERN "\n",
                    BYTE_TO_BINARY(memory >> 8), BYTE_TO_BINARY(memory));
         }
         addyCounter++;
