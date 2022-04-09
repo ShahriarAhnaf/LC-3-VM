@@ -14,8 +14,8 @@
 #include <sys/mman.h>
 
 
-void MAP_VM(void);
-void MAP_REGISTERS(void);
+void MAP_VM(FILE* map_file);
+void MAP_REGISTERS(FILE* map_file);
 void log_to_file(struct timespec start, struct timespec end, FILE* log_file, uint16_t op);
 enum
 {

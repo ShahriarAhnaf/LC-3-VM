@@ -90,7 +90,7 @@ void MAP_REGISTERS(void)
     }
 }
 
-void MAP_VM(void)
+void MAP_VM(FILE* map_file)
 {
     uint16_t addyCounter = 0;
     while (addyCounter < UINT16_MAX)
@@ -105,19 +105,23 @@ void MAP_VM(void)
         addyCounter++;
     }
 }
+#else 
+void MAP_VM(FILE* map_file){
 
+}
+void MAP_REGISTERS(FILE* map_file){
+
+}
+#endif
+
+#ifdef LOGGER
 void log_to_file(struct timespec start, struct timespec end, FILE* log_file, uint16_t op){
     clock_gettime(CLOCK_MONOTONIC_RAW, &end);
     long long delta_ns = (end.tv_nsec - start.tv_nsec) ;
     fprintf(log_file, "op: %x, time elapsed: %llu\n", op, delta_ns);
 }
 #else
-void MAP_VM(void){
 
-}
-void MAP_REGISTERS(void){
-
-}
 void log_to_file(struct timespec start, struct timespec end, FILE* log_file, uint16_t op)
 {
 

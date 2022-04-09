@@ -1,9 +1,21 @@
 #########################################################################################
 
+## Credits
 [CREDIT TO JUSTIN MEINER'S INSTRUCTIONS AND TEACHING](https://justinmeiners.github.io/lc3-vm/index.html#1:12)
 
 [The design document for the usage](https://justinmeiners.github.io/lc3-vm/supplies/lc3-isa.pdf)
 
+## Usage
+
+```
+# compiles the VM 
+make VM
+
+# compiles Debugger VM with log support
+make Debug
+
+#
+```
 
 **IMPROVEMENTS upon designs!!**
 - Opimization results!
@@ -14,7 +26,7 @@
 
 This is the tutorial project to understand computer instruction architecture such as LC3
 
-**UNDERSTANDING THE VM**
+## UNDERSTANDING THE VM
 **Memory**
 
 This is all the memory allocated for the Vm to use, for LC-3 its 65535(UINT16_max)
@@ -31,7 +43,7 @@ Theres are The LC-3 has 10 total registers, each of which is 16 bits. Most of th
 
 Each opcode represents one task that the CPU "knows" how to do. There are just **16 opcodes** in LC-3. Everything the computer can calculate is some sequence of these simple instructions. Each instruction is 16 bits long, with the left 4 bits storing the opcode. The rest of the bits are used to store the parameters.
 
-**PROCEDURE**
+## PROCEDURE
 
 Here is the procedure we need to write:
 
@@ -57,7 +69,7 @@ The registers are virtual cpu addresses to the memory allocated to the VM. All t
 OPcodes are the first 4 bits of the 16 bit instructions system. By moving over the instruction we can get the appropriate opcode!
 
 
-OPCODES!
+## OPCODES!
 
 *ADD*
 If bit [5] is 0, the second source operand is obtained from SR2. If bit [5] is 1, the second source operand is obtained by sign-extending the imm5 field to 16 bits. In both cases, the second source operand is added to the contents of SR1 and the result stored in DR.
@@ -136,6 +148,3 @@ find destination register for r1 and then apply the bitwise NOT operator to the 
 - These registers let the "computer" executing until the keyboard is pressed and THEN you can retrieve the data. instead of using getc and halting the whole computer. 
 
 
-EXTRA PROJECT 
-
-MAP THE VM SO THAT IT CAN BE SEEN IN MEMORY!

@@ -51,9 +51,13 @@ void handle_interrupt(int signal)
 
 int main(int argc, const char* argv[])
 {
-#ifdef DEBUGGER
+#ifdef LOGGER
     FILE *log_file;
-    log_file = fopen("log_speed.txt", "w+");
+    log_file = fopen("/logs/log_speed.txt", "w+");
+#endif
+#ifdef Debug
+    FILE *map_file;
+    map_file = fopen("logs/MAP.txt", "w+");
 #endif
     if (argc < 2)
     {
@@ -73,6 +77,12 @@ int main(int argc, const char* argv[])
     signal(SIGINT, handle_interrupt);
     disable_input_buffering();
 
+
+
+    //MAP THE VM
+    #ifdef DEBUGGER
+    MAP_VM(map_file);
+    #endif
     /* since exactly one condition flag should be set at any given time, set the Z flag */
     registers[R_COND] = FL_ZRO;
 
@@ -93,6 +103,13 @@ int main(int argc, const char* argv[])
         /* FETCH */
         uint16_t instr = mem_read(registers[R_PC]++);
         uint16_t op = instr >> 12;
+        
+        
+        #ifdef DEBUGGER
+        MAP_REGISTERS(map_file);
+        #endif
+        
+        
         //get time
         clock_gettime(CLOCK_MONOTONIC_RAW, &start);
         // prejumping the move pepelaff
@@ -288,7 +305,7 @@ int main(int argc, const char* argv[])
         }
         // time to traverse the switch statement.
         
-#ifdef DEBUGGER   
+#ifdef LOGGER   
         if (bruh){
             log_to_file(start,end, log_file, op);
          }   
@@ -296,6 +313,9 @@ int main(int argc, const char* argv[])
     fclose(log_file);
 #else
     } // end of while loop   
+#endif
+#ifdef DEBUGGER
+    fclose(map_file);
 #endif
     restore_input_buffering();
 }

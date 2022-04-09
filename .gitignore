@@ -1,7 +1,6 @@
 .DS_Store
 *.sym
 *.txt
-logs/
 VM
 
 # Prerequisites
