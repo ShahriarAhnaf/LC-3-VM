@@ -96,13 +96,13 @@ int main(int argc, const char* argv[])
         // prejumping the move pepelaff
         if (op & 0b0011) r0 = (instr >> 9) & 0x7;
         if (op & 0b0101) r1 = (instr >> 6) & 0x7;
+        if ((op & 0b0110)) pc_offset = sign_extend(instr & 0x1FF, 9);
         switch (op)
         {
             case OP_ADD:
                 {
                     /* whether we are in immediate mode */
                     imm_flag = (instr >> 5) & 0x1;
-                
                     if (imm_flag)
                     {
                         imm5 = sign_extend(instr & 0x1F, 5);
@@ -120,7 +120,6 @@ int main(int argc, const char* argv[])
             case OP_AND:
                 {
                     imm_flag = (instr >> 5) & 0x1;
-                
                     if (imm_flag)
                     {
                         imm5 = sign_extend(instr & 0x1F, 5);
@@ -159,12 +158,13 @@ int main(int argc, const char* argv[])
                 break;
             case OP_JSR:
                 {
-                    uint16_t long_flag = (instr >> 11) & 1;
+                    //actually a long PC offset flag, reusing variables for speed.
+                    imm_flag = (instr >> 11) & 1;
                     registers[R_R7] = registers[R_PC];
-                    if (long_flag)
+                    if (imm_flag)
                     {
-                        uint16_t long_pc_offset = sign_extend(instr & 0x7FF, 11);
-                        registers[R_PC] += long_pc_offset;  /* JSR */
+                        pc_offset = sign_extend(instr & 0x7FF, 11);
+                        registers[R_PC] += pc_offset;  /* JSR */
                     }
                     else
                     {
@@ -175,15 +175,12 @@ int main(int argc, const char* argv[])
                 break;
             case OP_LD:
                 {
-                    pc_offset = sign_extend(instr & 0x1FF, 9);
                     registers[r0] = mem_read(registers[R_PC] + pc_offset);
                     update_flags(r0);
                 }
                 break;
             case OP_LDI:
                 {
-                    /* PCoffset 9*/
-                    pc_offset = sign_extend(instr & 0x1FF, 9);
                     /* add pc_offset to the current PC, look at that memory location to get the final address */
                     registers[r0] = mem_read(mem_read(registers[R_PC] + pc_offset));
                     update_flags(r0);
@@ -198,20 +195,17 @@ int main(int argc, const char* argv[])
                 break;
             case OP_LEA:
                 {
-                    pc_offset = sign_extend(instr & 0x1FF, 9);
                     registers[r0] = registers[R_PC] + pc_offset;
                     update_flags(r0);
                 }
                 break;
             case OP_ST:
                 {
-                    pc_offset = sign_extend(instr & 0x1FF, 9);
                     mem_write(registers[R_PC] + pc_offset, registers[r0]);
                 }
                 break;
             case OP_STI:
                 {
-                    pc_offset = sign_extend(instr & 0x1FF, 9);
                     mem_write(mem_read(registers[R_PC] + pc_offset), registers[r0]);
                 }
                 break;
