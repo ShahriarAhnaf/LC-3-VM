@@ -107,9 +107,9 @@ void MAP_VM(void)
 }
 
 void log_to_file(struct timespec start, struct timespec end, FILE* log_file, uint16_t op){
-    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-    float delta_us = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) ;
-    fprintf(log_file, "op: %x, time elapsed: %f\n", op, delta_us);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end);   
+    long long delta_ns = (end.tv_nsec - start.tv_nsec) ;
+    fprintf(log_file, "op: %x, time elapsed: %llu\n", op, delta_ns);
 }
 #else
 void MAP_VM(void){
