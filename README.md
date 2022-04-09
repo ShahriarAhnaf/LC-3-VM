@@ -1,6 +1,6 @@
 #########################################################################################
 
-## Credits
+# Credits
 [CREDIT TO JUSTIN MEINER'S INSTRUCTIONS AND TEACHING](https://justinmeiners.github.io/lc3-vm/index.html#1:12)
 
 [The design document for the usage](https://justinmeiners.github.io/lc3-vm/supplies/lc3-isa.pdf)
@@ -36,7 +36,7 @@ This is the tutorial project to understand computer instruction architecture suc
 **Memory**
 This is all the memory allocated for the Vm to use, for LC-3 its 65535(UINT16_max)
 
-# LOOKS LIKE THIS 
+### LOOKS LIKE THIS 
 ![design](https://github.com/ShahriarAhnaf/LC-3-VM/blob/main/assets/Design.png)
 
 **Registers**
