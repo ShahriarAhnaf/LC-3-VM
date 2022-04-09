@@ -8,7 +8,7 @@
 **IMPROVEMENTS upon designs!!**
 - Opimization results!
 - logs cannot be uploaded since files are too large :(
-- ![FINAL PIC](https://github.com/ShahriarAhnaf/LC-3-VM/optimization-study.png)
+- ![FINAL PIC](https://github.com/ShahriarAhnaf/LC-3-VM/blob/main/optimized-diff.png)
 
 **VM PROJECT USING C**
 
