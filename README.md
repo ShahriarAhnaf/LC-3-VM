@@ -26,7 +26,7 @@ make run-2048
 
 **IMPROVEMENTS upon designs!!**
 - Opimization results!
-- ![FINAL PIC](https://github.com/ShahriarAhnaf/LC-3-VM/blob/main/optimized-diff.png)
+- ![FINAL PIC](https://github.com/ShahriarAhnaf/LC-3-VM/blob/main/assets/optimized-diff.png)
 
 **VM PROJECT USING C**
 
@@ -34,8 +34,10 @@ This is the tutorial project to understand computer instruction architecture suc
 
 ## UNDERSTANDING THE VM
 **Memory**
-
 This is all the memory allocated for the Vm to use, for LC-3 its 65535(UINT16_max)
+
+# LOOKS LIKE THIS 
+![design](https://github.com/ShahriarAhnaf/LC-3-VM/blob/main/assets/design.png)
 
 **Registers**
 
