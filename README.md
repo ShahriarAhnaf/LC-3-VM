@@ -8,6 +8,10 @@
 - FIGURE OUT THE MULTIPLE FILE IMPLEMENTATION DOES NOT WORK.
 - RESULTS ARE OUT AND THEY ARE NOT GOOD FOR THE SPEED SIDE
 
+IMPROVEMENTS
+- EVERYTHING BUT JMP and JSR
+
+
 **VM PROJECT USING C**
 
 This is the tutorial project to understand computer instruction architecture such as LC3
