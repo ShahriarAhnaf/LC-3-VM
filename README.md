@@ -7,19 +7,25 @@
 
 ## Usage
 
+clone repo and cd into directory with terminal. 
+
 ```
 # compiles the VM 
 make VM
 
-# compiles Debugger VM with log support
+# compiles Debugger VM with debug log support
 make Debug
 
+# compiles VM with speed log support
+make Log
+
+#runs 2048 directly
+make run-2048
 #
 ```
 
 **IMPROVEMENTS upon designs!!**
 - Opimization results!
-- logs cannot be uploaded since files are too large :(
 - ![FINAL PIC](https://github.com/ShahriarAhnaf/LC-3-VM/blob/main/optimized-diff.png)
 
 **VM PROJECT USING C**

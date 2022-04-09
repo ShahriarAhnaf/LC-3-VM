@@ -1,7 +1,7 @@
-.DS_Store
+*.DS_Store*
 *.sym
 *.txt
-VM
+
 
 # Prerequisites
 *.d
@@ -35,6 +35,10 @@ VM
 *.exe
 *.out
 *.app
-Mach-o
 
-Debug-VM
+
+// vm programs
+VM*
+Debug-VM*
+DEBUG-VM*
+LOG-VM*

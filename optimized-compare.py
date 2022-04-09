@@ -46,7 +46,7 @@ Lefile.close()
 
 
 #nice output 
-print(f"{'opcode':<10}{'ORG(uS)':<30} {'Optimized(uS)':<45} {'DIFF(%)':<70}")
+print(f"{'opcode':<10}{'ORG(µS)':<30} {'Optimized(µS)':<45} {'DIFF(%)':<70}")
     
 for i in range(0,len(fastcount)):
     #weighted the counting by their own occurences
