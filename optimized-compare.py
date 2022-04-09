@@ -7,13 +7,12 @@ for i in range(0,16):
 
 line_count = 0
 for line in Lefile:
-    leLine = (line.split('.')[0]).split()
-    speed = leLine[-1]
+    leLine = line.split()
     #find which list to add to. 
     op=int(leLine[1][0],16)
     fastcountavg[op]+= 1
     #use the list indext to go to op. 
-    fastcount[op] += int(speed, 10)/10 # last thing in line
+    fastcount[op] += int(leLine[-1], 10)/10 # last thing in line
     line_count += 1
     if line_count > 1000000: break
 Lefile.close()
@@ -29,15 +28,15 @@ for i in range(0,16):
     slowcountavg.append(0)
 line_count = 0
 for line in Lefile:
-    leLine = (line.split('.')[0]).split()
-    speed = leLine[-1]
+    leLine = line.split()
     #find which list to add to. 
     op=int(leLine[1][0],16)
     slowcountavg[op]+= 1
     #use the list indext to go to op. 
-    slowcount[op] += int(speed, 10)/10 # last thing in line
+    slowcount[op] += int(leLine[-1], 10)/10 # last thing in line
     line_count += 1
     if line_count > 1000000: break
+Lefile.close()
 Lefile.close()
 
 
