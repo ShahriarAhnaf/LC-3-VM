@@ -24,8 +24,10 @@ make run-2048
 #
 ```
 
-**IMPROVEMENTS upon designs!!**
-- Opimization results!
+## **IMPROVEMENTS upon designs!!**
+**Opimization results!**
+- Below is an opcode by opcode comparision of time taken using data logging and parsed through python. 
+- Optimization is mainly done in how opcode is parsed and noticign that opcodes share similiar operations. These are grouped together and done before parsing individual instructions and thus cut down on time if similiar opcodes operation are ran sequentially. 
 - ![FINAL PIC](https://github.com/ShahriarAhnaf/LC-3-VM/blob/main/assets/optimized-diff.png)
 
 **VM PROJECT USING C**
